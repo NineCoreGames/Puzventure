@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody rb;
     private Vector2 moveInput;
+    private bool isGrounded = true;
 
     void Start()
     {
@@ -35,9 +36,10 @@ public class PlayerMovement : MonoBehaviour
                 moveX = 1f;
 
             // Zıplama
-            if (Keyboard.current.spaceKey.wasPressedThisFrame)
+            if (Keyboard.current.spaceKey.wasPressedThisFrame && isGrounded)
             {
                 rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+                isGrounded = false;
             }
         }
 
@@ -59,5 +61,12 @@ public class PlayerMovement : MonoBehaviour
         rb.MovePosition(
             rb.position + movement * currentSpeed * Time.fixedDeltaTime
         );
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = true;
+        }
     }
 }
