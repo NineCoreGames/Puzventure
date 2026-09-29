@@ -1446,6 +1446,7 @@ GameObject:
   - component: {fileID: 578125600}
   - component: {fileID: 578125599}
   - component: {fileID: 578125598}
+  - component: {fileID: 578125602}
   m_Layer: 0
   m_Name: Cargo_03
   m_TagString: Untagged
@@ -1539,8 +1540,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 578125597}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15, y: 1.4, z: 14}
+  m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
+  m_LocalPosition: {x: -15, y: 1.8, z: 14}
   m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 0
   m_Children: []
