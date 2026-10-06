@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class RuneRotation : MonoBehaviour
+public class Spinner : MonoBehaviour
 {
-    public float rotationSpeed = 60f;
+    [SerializeField] private float rotationSpeed = 90f;
 
     void Update()
     {
