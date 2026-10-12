@@ -1,10 +1,10 @@
 using UnityEngine;
 public class Spinner : MonoBehaviour
 {
+    public Vector3 rotationSpeed;
     // degrees per SECOND
-    [SerializeField] private float rotationSpeed = 90f;
     void Update()
     {
-        transform.Rotate(0f, rotationSpeed * Time.deltaTime, 0f);
+        transform.Rotate(rotationSpeed * Time.deltaTime);
     }
 }
