@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Cargo : MonoBehaviour
+public class H_Cargo : MonoBehaviour
 {
     private Rigidbody rb;
     private Collider box;

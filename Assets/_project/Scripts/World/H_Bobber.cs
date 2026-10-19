@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Bobber : MonoBehaviour
+public class H_Bobber : MonoBehaviour
 {
     [SerializeField] private float bobHeight = 0.25f; // metre yukarı-aşağı
     [SerializeField] private float bobSpeed = 2f;     // yüzme hızı

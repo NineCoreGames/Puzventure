@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Spinner : MonoBehaviour
+public class H_Spinner : MonoBehaviour
 {
     // derece / saniye
     [SerializeField] private float rotationSpeed = 90f;

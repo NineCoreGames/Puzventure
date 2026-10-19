@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class Hazard : MonoBehaviour
+public class H_Hazard : MonoBehaviour
 {
     void OnTriggerEnter(Collider other)
     {
-        PlayerCarry carry = other.GetComponent<PlayerCarry>();
+        H_PlayerCarry carry = other.GetComponent<H_PlayerCarry>();
         if (carry == null) return;
         if (!carry.IsCarrying()) return;
 
