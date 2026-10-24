@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerJump : MonoBehaviour
 {
-    [SerializeField] private float jumpForce = 4f;
+    [SerializeField] private float jumpForce = 5f;
     [SerializeField] private LayerMask groundLayers;
 
     private Rigidbody rb;
