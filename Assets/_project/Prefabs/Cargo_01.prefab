@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 2670186677677020994}
   - component: {fileID: 3486551733150460517}
   - component: {fileID: 445263552316151666}
-  - component: {fileID: 4505873030168126031}
   - component: {fileID: 4993779191132039847}
+  - component: {fileID: 7334437031207048308}
   m_Layer: 0
   m_Name: Cargo_01
   m_TagString: Untagged
@@ -84,18 +84,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4505873030168126031
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1318197755402945191}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d611a143a093fe346a6108e6354a8629, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Cargo
 --- !u!135 &4993779191132039847
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -117,6 +105,18 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 1.2
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7334437031207048308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1318197755402945191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d611a143a093fe346a6108e6354a8629, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Cargo
 --- !u!1 &2127314848057164600
 GameObject:
   m_ObjectHideFlags: 0

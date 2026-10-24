@@ -4,11 +4,9 @@ public class Hazard : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        PlayerCarry carrier = other.GetComponent<PlayerCarry>();
-        if (carrier != null && carrier.IsCarrying)
+        if (other.TryGetComponent<RuneCarrier>(out var carrier))
         {
-            carrier.DropCargo();
-            Debug.Log("Tuzak kargoyu düşürdü!");
+            carrier.DropActiveRune();
         }
     }
 }
