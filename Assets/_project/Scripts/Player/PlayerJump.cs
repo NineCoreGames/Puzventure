@@ -6,7 +6,7 @@ public class PlayerJump : MonoBehaviour
 
 {
 
-    [SerializeField] private float jumpForce = 4f;
+    [SerializeField] private float jumpForce = 6f;
 
     // which layers count as ground: set it to Ground!
 
