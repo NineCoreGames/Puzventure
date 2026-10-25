@@ -1,7 +1,10 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerMove : MonoBehaviour
+
+namespace Puzventure.Gokturk
+{
+    public class PlayerMove : MonoBehaviour
 {
     // the knobs of movement, shown in the Inspector
     [SerializeField] private float maxSpeed = 5f;
@@ -99,4 +102,5 @@ public class PlayerMove : MonoBehaviour
     {
         grip = value;
     }
+}
 }

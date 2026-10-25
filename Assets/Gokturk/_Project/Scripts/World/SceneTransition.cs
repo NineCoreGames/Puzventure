@@ -1,7 +1,10 @@
 using UnityEngine;
 using UnityEngine.SceneManagement; // Required for changing scenes
 
-public class SceneTransition : MonoBehaviour
+
+namespace Puzventure.Gokturk
+{
+    public class SceneTransition : MonoBehaviour
 {
     [Header("Configuration")]
     [SerializeField] private string sceneToLoad; // Type the exact name of your next scene here
@@ -28,3 +31,5 @@ public class SceneTransition : MonoBehaviour
         }
     }
 }
+}
+

@@ -1,5 +1,8 @@
 using UnityEngine;
-public class Cargo : MonoBehaviour
+
+namespace Puzventure.Gokturk
+{
+    public class Cargo : MonoBehaviour
 {
     private Rigidbody rb;
     private Collider box; // solid body
@@ -47,3 +50,5 @@ public class Cargo : MonoBehaviour
     }
 }
 
+
+}

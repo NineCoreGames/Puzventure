@@ -1,5 +1,8 @@
 using UnityEngine;
-public class DeliveryZone : MonoBehaviour
+
+namespace Puzventure.Gokturk
+{
+    public class DeliveryZone : MonoBehaviour
 {
     void OnTriggerEnter(Collider other)
     {
@@ -13,4 +16,5 @@ public class DeliveryZone : MonoBehaviour
         Destroy(cargo.gameObject);
         Debug.Log("Delivered!");
     }
+}
 }

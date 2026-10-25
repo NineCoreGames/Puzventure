@@ -1,7 +1,9 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerDrop : MonoBehaviour
+namespace Puzventure.Gokturk
+{
+    public class PlayerDrop : MonoBehaviour
 {
     private PlayerCarry carry;
     private InputAction dropAction;
@@ -21,3 +23,5 @@ public class PlayerDrop : MonoBehaviour
     }
 
 }
+}
+

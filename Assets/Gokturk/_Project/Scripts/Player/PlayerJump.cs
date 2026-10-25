@@ -1,7 +1,10 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerJump : MonoBehaviour
+
+namespace Puzventure.Gokturk
+{
+    public class PlayerJump : MonoBehaviour
 {
     [SerializeField] private float jumpForce = 4f;
     // short wait between jumps, so holding Space doesn't fire twice in one take-off
@@ -59,4 +62,5 @@ public class PlayerJump : MonoBehaviour
         return Physics.Raycast(transform.position, Vector3.down,
                                1.1f, groundLayers);
     }
+}
 }

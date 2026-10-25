@@ -1,5 +1,8 @@
 using UnityEngine;
-public class PlayerCarry : MonoBehaviour
+
+namespace Puzventure.Gokturk
+{
+    public class PlayerCarry : MonoBehaviour
 {
     [SerializeField] private Transform carryPoint;
 
@@ -36,4 +39,5 @@ public class PlayerCarry : MonoBehaviour
         carried = null; // hands empty again
         return cargo;
     }
+}
 }

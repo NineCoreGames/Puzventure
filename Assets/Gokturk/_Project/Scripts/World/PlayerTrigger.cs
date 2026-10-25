@@ -1,5 +1,9 @@
 using UnityEngine;
-public class PlayerTrigger : MonoBehaviour
+
+
+namespace Puzventure.Gokturk
+{
+    public class PlayerTrigger : MonoBehaviour
 {
     // set both in the Inspector, for each object
     [SerializeField] private string message = "Collected!";
@@ -12,4 +16,5 @@ public class PlayerTrigger : MonoBehaviour
         Debug.Log(message);
         if (removeAfter) Destroy(gameObject);
     }
+}
 }

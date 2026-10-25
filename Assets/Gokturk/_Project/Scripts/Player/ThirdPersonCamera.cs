@@ -1,7 +1,10 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-/// <summary>
+
+namespace Puzventure.Gokturk
+{
+    /// <summary>
 /// Third-person camera that follows the player and rotates with the mouse.
 /// Mouse X turns both the camera and the player (yaw).
 /// Mouse Y tilts the camera up/down (pitch) without tilting the player.
@@ -145,4 +148,5 @@ public class ThirdPersonCamera : MonoBehaviour
         Cursor.lockState = locked ? CursorLockMode.Locked : CursorLockMode.None;
         Cursor.visible = !locked;
     }
+}
 }

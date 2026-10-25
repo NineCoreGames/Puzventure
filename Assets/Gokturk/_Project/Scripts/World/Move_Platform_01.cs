@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public class Move_Platform_01 : MonoBehaviour
+
+namespace Puzventure.Gokturk
+{
+    public class Move_Platform_01 : MonoBehaviour
 {
     [SerializeField] private Transform pointB;
     [SerializeField] private float speed = 6.0f; 
@@ -71,4 +74,6 @@ public class Move_Platform_01 : MonoBehaviour
             lastPlatformVelocity = Vector3.zero;
         }
     }
+}
+
 }

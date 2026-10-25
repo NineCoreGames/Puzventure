@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public class Slippery : MonoBehaviour
+
+namespace Puzventure.Gokturk
+{
+    public class Slippery : MonoBehaviour
 {
     // 1 = normal ground, 0.04 = ice: hardly any grip
     [SerializeField] private float grip = 0.04f;
@@ -22,4 +25,5 @@ public class Slippery : MonoBehaviour
         if (move != null) move.SetGrip(1f); // full grip again
     }
 
+}
 }
