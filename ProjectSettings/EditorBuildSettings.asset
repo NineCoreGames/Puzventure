@@ -6,8 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/Gokturk/_Project/Scenes/Level_1 (gokturk).unity
+    guid: 1f47ade2dd98a40a18abb022ba4818b6
+  - enabled: 1
+    path: Assets/Gokturk/_Project/Scenes/main.unity
+    guid: 5f5a52f6deb2d87428200a4208799d93
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: d91f4456b915e47dd8bbd28e7990bc5b, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
