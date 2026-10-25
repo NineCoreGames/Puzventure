@@ -356,10 +356,10 @@ GameObject:
   - component: {fileID: 151010327}
   - component: {fileID: 151010326}
   - component: {fileID: 151010331}
-  - component: {fileID: 151010333}
   - component: {fileID: 151010334}
   - component: {fileID: 151010336}
   - component: {fileID: 151010335}
+  - component: {fileID: 151010337}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -491,19 +491,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &151010333
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 151010325}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 248ea41af3d908449879ec3d38d81e10, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerCarry
-  carryPoint: {fileID: 1893625237}
 --- !u!114 &151010334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -516,9 +503,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ded64659c4f93040aac11bba89c61eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMove
-  maxSpeed: 5
-  acceleration: 40
-  turnSpeed: 720
+  movementSpeed: 5
+  accelerationRate: 40
+  rotationSpeed: 720
 --- !u!114 &151010335
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -547,6 +534,19 @@ MonoBehaviour:
   groundLayers:
     serializedVersion: 2
     m_Bits: 8
+--- !u!114 &151010337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 151010325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 248ea41af3d908449879ec3d38d81e10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RuneCarrier
+  carrySocket: {fileID: 1893625237}
 --- !u!1 &214191987
 GameObject:
   m_ObjectHideFlags: 0
@@ -1320,7 +1320,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2670186677677020994, guid: 97e82234765da5749bc4bd5a0eeac3ab, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 0.68
       objectReference: {fileID: 0}
     - target: {fileID: 2670186677677020994, guid: 97e82234765da5749bc4bd5a0eeac3ab, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1484,7 +1484,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 856798ea1f0094943ba6e583261cfef1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Slippery
-  grip: 0.04
+  surfaceGrip: 0.03
 --- !u!1 &795187458
 GameObject:
   m_ObjectHideFlags: 0
@@ -1988,7 +1988,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 74923e1c0ceb9344091ec401bca873e7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2290,6 +2290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 178f90d884cfecb4eb7d0f1f15e74789, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeliveryZone
+  depositPoint: {fileID: 0}
 --- !u!1 &1893625236
 GameObject:
   m_ObjectHideFlags: 0
@@ -2612,10 +2613,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 414817809287916580, guid: 97e82234765da5749bc4bd5a0eeac3ab, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1318197755402945191, guid: 97e82234765da5749bc4bd5a0eeac3ab, type: 3}
       propertyPath: m_Name
       value: Rune_01
@@ -2659,10 +2656,6 @@ PrefabInstance:
     - target: {fileID: 2670186677677020994, guid: 97e82234765da5749bc4bd5a0eeac3ab, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3486551733150460517, guid: 97e82234765da5749bc4bd5a0eeac3ab, type: 3}
-      propertyPath: m_Constraints
-      value: 112
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
