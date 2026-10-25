@@ -2890,7 +2890,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e1318c2a28bcb24aaf9d3af3d039dfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::A_PlayerJump
-  jumpForce: 4
+  jumpForce: 5
   groundLayers:
     serializedVersion: 2
     m_Bits: 8
