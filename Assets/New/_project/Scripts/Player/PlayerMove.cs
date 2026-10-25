@@ -43,6 +43,7 @@ public class PlayerMove : MonoBehaviour
         direction = new Vector3(input.x, 0f, input.y);
 
     }
+
     void FixedUpdate()
 
     {
@@ -57,7 +58,7 @@ public class PlayerMove : MonoBehaviour
 
         // get a little closer to the wanted speed
 
-        float step = acceleration * grip * Time.fixedDeltaTime;
+        float step = acceleration  * Time.fixedDeltaTime;
 
         flat = Vector3.MoveTowards(flat, wanted, step);
 
