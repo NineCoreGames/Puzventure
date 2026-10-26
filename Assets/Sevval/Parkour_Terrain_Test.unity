@@ -743,6 +743,7 @@ MonoBehaviour:
   maxSpeed: 5
   acceleration: 40
   turnSpeed: 720
+  cameraTransform: {fileID: 0}
 --- !u!114 &495994524
 MonoBehaviour:
   m_ObjectHideFlags: 0
