@@ -1,15 +1,25 @@
+
 using UnityEngine;
+
 public class PlayerTrigger : MonoBehaviour
 {
-    // set both in the Inspector, for each object
     [SerializeField] private string message = "Collected!";
     [SerializeField] private bool removeAfter = true;
+
+    private bool collected = false;
+
     void OnTriggerEnter(Collider other)
     {
-        // Who? only the object tagged "Player"
+        if (collected) return;
         if (!other.CompareTag("Player")) return;
-        // Act: report it, remove it if asked
+
+        collected = true;
+
         Debug.Log(message);
-        if (removeAfter) Destroy(gameObject);
+
+        if (removeAfter)
+        {
+            Destroy(gameObject);
+        }
     }
 }
