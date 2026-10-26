@@ -1,19 +1,22 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerDrop : MonoBehaviour
+namespace Puzventure.Elif
 {
-    private PlayerCarry carry;
-    private InputAction dropAction;
-
-    void Start()
+    public class PlayerDrop : MonoBehaviour
     {
-        carry = GetComponent<PlayerCarry>();
-        dropAction = InputSystem.actions.FindAction("Interact");
-    }
+        private PlayerCarry carry;
+        private InputAction dropAction;
 
-    void Update()
-    {
-        if (dropAction.WasPressedThisFrame()) carry.DropCargo();
+        void Start()
+        {
+            carry = GetComponent<PlayerCarry>();
+            dropAction = InputSystem.actions.FindAction("Interact");
+        }
+
+        void Update()
+        {
+            if (dropAction.WasPressedThisFrame()) carry.DropCargo();
+        }
     }
 }

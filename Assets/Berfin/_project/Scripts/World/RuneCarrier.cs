@@ -1,51 +1,54 @@
 using UnityEngine;
 
-public class RuneCarrier : MonoBehaviour
+namespace Puzventure.Berfin
 {
-    [Header("Socket References")]
-    [Tooltip("Rünün sabitleneceği baş üstü noktası")]
-    [SerializeField] private Transform carrySocket;
-
-    private RuneItem activeRune;
-    private float pickupCooldownTimer = 0f;
-
-    public bool HasRune => activeRune != null;
-
-    void Update()
+    public class RuneCarrier : MonoBehaviour
     {
-        if (pickupCooldownTimer > 0f)
+        [Header("Socket References")]
+        [Tooltip("Rünün sabitleneceği baş üstü noktası")]
+        [SerializeField] private Transform carrySocket;
+
+        private RuneItem activeRune;
+        private float pickupCooldownTimer = 0f;
+
+        public bool HasRune => activeRune != null;
+
+        void Update()
         {
-            pickupCooldownTimer -= Time.deltaTime;
+            if (pickupCooldownTimer > 0f)
+            {
+                pickupCooldownTimer -= Time.deltaTime;
+            }
         }
-    }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (HasRune || pickupCooldownTimer > 0f) return;
-
-        // Çarpan nesnede rün bileşeni var mı kontrolü
-        if (other.TryGetComponent<RuneItem>(out var rune))
+        private void OnTriggerEnter(Collider other)
         {
-            activeRune = rune;
-            rune.AttachToCarrier(carrySocket);
+            if (HasRune || pickupCooldownTimer > 0f) return;
+
+            // Çarpan nesnede rün bileşeni var mı kontrolü
+            if (other.TryGetComponent<RuneItem>(out var rune))
+            {
+                activeRune = rune;
+                rune.AttachToCarrier(carrySocket);
+            }
         }
-    }
 
-    public void DropActiveRune()
-    {
-        if (!HasRune) return;
+        public void DropActiveRune()
+        {
+            if (!HasRune) return;
 
-        activeRune.ReleaseRune();
-        activeRune = null;
-        pickupCooldownTimer = 1.0f; // Düşürüldükten sonra anında geri kapmayı önleyen süre
-    }
+            activeRune.ReleaseRune();
+            activeRune = null;
+            pickupCooldownTimer = 1.0f; // Düşürüldükten sonra anında geri kapmayı önleyen süre
+        }
 
-    public RuneItem DeliverRune()
-    {
-        if (!HasRune) return null;
+        public RuneItem DeliverRune()
+        {
+            if (!HasRune) return null;
 
-        RuneItem completedRune = activeRune;
-        activeRune = null;
-        return completedRune;
+            RuneItem completedRune = activeRune;
+            activeRune = null;
+            return completedRune;
+        }
     }
 }

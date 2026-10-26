@@ -1,16 +1,19 @@
 ﻿using UnityEngine;
 
-public class A_Hazard : MonoBehaviour
+namespace Puzventure.Azra
 {
-    void OnTriggerEnter(Collider other)
+    public class A_Hazard : MonoBehaviour
     {
-        // Who? — giren oyuncu mu, elinde idol var mı?
-        A_PlayerCarry carry = other.GetComponent<A_PlayerCarry>();
-        if (carry == null) return;                  // oyuncu değil → çık
-        if (!carry.IsCarrying()) return;            // elinde bir şey yok → çık
+        void OnTriggerEnter(Collider other)
+        {
+            // Who? — giren oyuncu mu, elinde idol var mı?
+            A_PlayerCarry carry = other.GetComponent<A_PlayerCarry>();
+            if (carry == null) return;                  // oyuncu değil → çık
+            if (!carry.IsCarrying()) return;            // elinde bir şey yok → çık
 
-        // Act — idolu düşür
-        carry.DropCargo();
-        Debug.Log(name + " knocked the cargo off!");
+            // Act — idolu düşür
+            carry.DropCargo();
+            Debug.Log(name + " knocked the cargo off!");
+        }
     }
 }

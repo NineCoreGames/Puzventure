@@ -1,26 +1,29 @@
 using UnityEngine;
 
-public class Blinker : MonoBehaviour
+namespace Puzventure.Omer
 {
-    [SerializeField] private float interval = 1.0f;   // saniye
-
-    private Renderer rend;
-    private float timer;
-
-    public bool IsOn => rend.enabled;                 // Hazard buna bakacak
-
-    void Start()
+    public class Blinker : MonoBehaviour
     {
-        rend = GetComponentInChildren<Renderer>();    // Renderer kendinde ya da çocuğunda olabilir
-    }
+        [SerializeField] private float interval = 1.0f;   // saniye
 
-    void Update()
-    {
-        timer += Time.deltaTime;
-        if (timer >= interval)
+        private Renderer rend;
+        private float timer;
+
+        public bool IsOn => rend.enabled;                 // Hazard buna bakacak
+
+        void Start()
         {
-            rend.enabled = !rend.enabled;
-            timer = 0f;
+            rend = GetComponentInChildren<Renderer>();    // Renderer kendinde ya da çocuğunda olabilir
+        }
+
+        void Update()
+        {
+            timer += Time.deltaTime;
+            if (timer >= interval)
+            {
+                rend.enabled = !rend.enabled;
+                timer = 0f;
+            }
         }
     }
 }

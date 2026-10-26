@@ -1,26 +1,29 @@
 using UnityEngine;
 
-public class Hazard : MonoBehaviour
+namespace Puzventure.Omer
 {
-    private Blinker blinker;
-
-    void Start()
+    public class Hazard : MonoBehaviour
     {
-        blinker = GetComponent<Blinker>();   // yoksa null: hazard hep tehlikeli
-    }
+        private Blinker blinker;
 
-    void OnTriggerStay(Collider other)
-    {
-        // Is the hazard dangerous right now?
-        if (blinker != null && !blinker.IsOn) return;
+        void Start()
+        {
+            blinker = GetComponent<Blinker>();   // yoksa null: hazard hep tehlikeli
+        }
 
-        // Who? the courier, carrying cargo
-        PlayerCarry carry = other.GetComponent<PlayerCarry>();
-        if (carry == null) return;
-        if (!carry.IsCarrying()) return;
+        void OnTriggerStay(Collider other)
+        {
+            // Is the hazard dangerous right now?
+            if (blinker != null && !blinker.IsOn) return;
 
-        // Act: knock the cargo off
-        carry.DropCargo();
-        Debug.Log(name + " knocked the cargo off!");
+            // Who? the courier, carrying cargo
+            PlayerCarry carry = other.GetComponent<PlayerCarry>();
+            if (carry == null) return;
+            if (!carry.IsCarrying()) return;
+
+            // Act: knock the cargo off
+            carry.DropCargo();
+            Debug.Log(name + " knocked the cargo off!");
+        }
     }
 }

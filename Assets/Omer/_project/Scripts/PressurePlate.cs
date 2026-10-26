@@ -1,22 +1,25 @@
 using UnityEngine;
 
-public class PressurePlate : MonoBehaviour
+namespace Puzventure.Omer
 {
-    [SerializeField] private GameObject door;
-
-    private void OnTriggerEnter(Collider other)
+    public class PressurePlate : MonoBehaviour
     {
-        if (other.CompareTag("PushableBlock"))
+        [SerializeField] private GameObject door;
+
+        private void OnTriggerEnter(Collider other)
         {
-            door.SetActive(false);
+            if (other.CompareTag("PushableBlock"))
+            {
+                door.SetActive(false);
+            }
         }
-    }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("PushableBlock"))
+        private void OnTriggerExit(Collider other)
         {
-            door.SetActive(true);
+            if (other.CompareTag("PushableBlock"))
+            {
+                door.SetActive(true);
+            }
         }
     }
 }

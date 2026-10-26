@@ -1,32 +1,35 @@
 using UnityEngine;
 
-public class PlayerCarry : MonoBehaviour
+namespace Puzventure.Elif
 {
-    [SerializeField] private Transform carryPoint;
-    private Cargo carried;
-
-    public bool IsCarrying() => carried != null;
-
-    public void DropCargo()
+    public class PlayerCarry : MonoBehaviour
     {
-        if (!IsCarrying()) return;
-        carried.Drop();
-        carried = null;
-    }
+        [SerializeField] private Transform carryPoint;
+        private Cargo carried;
 
-    public Cargo HandOver()
-    {
-        Cargo cargo = carried;
-        carried = null;
-        return cargo;
-    }
+        public bool IsCarrying() => carried != null;
 
-    void OnTriggerEnter(Collider other)
-    {
-        Cargo cargo = other.GetComponent<Cargo>();
-        if (cargo == null || IsCarrying() || !cargo.CanBePickedUp()) return;
+        public void DropCargo()
+        {
+            if (!IsCarrying()) return;
+            carried.Drop();
+            carried = null;
+        }
 
-        carried = cargo;
-        cargo.PickUp(carryPoint);
+        public Cargo HandOver()
+        {
+            Cargo cargo = carried;
+            carried = null;
+            return cargo;
+        }
+
+        void OnTriggerEnter(Collider other)
+        {
+            Cargo cargo = other.GetComponent<Cargo>();
+            if (cargo == null || IsCarrying() || !cargo.CanBePickedUp()) return;
+
+            carried = cargo;
+            cargo.PickUp(carryPoint);
+        }
     }
 }

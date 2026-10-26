@@ -1,22 +1,25 @@
 using UnityEngine;
 
-public class MovingObstacle : MonoBehaviour
+namespace Puzventure.Omer
 {
-    [SerializeField] private float distance = 3f;
-    [SerializeField] private float speed = 2f;
-
-    private Vector3 startPosition;
-
-    private void Start()
+    public class MovingObstacle : MonoBehaviour
     {
-        startPosition = transform.position;
-    }
+        [SerializeField] private float distance = 3f;
+        [SerializeField] private float speed = 2f;
 
-    private void Update()
-    {
-        float offset = Mathf.Sin(Time.time * speed) * distance;
+        private Vector3 startPosition;
 
-        transform.position = startPosition
-                             + Vector3.right * offset;
+        private void Start()
+        {
+            startPosition = transform.position;
+        }
+
+        private void Update()
+        {
+            float offset = Mathf.Sin(Time.time * speed) * distance;
+
+            transform.position = startPosition
+                                 + Vector3.right * offset;
+        }
     }
 }

@@ -1,18 +1,21 @@
 using UnityEngine;
 
-public class RuneStone : MonoBehaviour
+namespace Puzventure.Elif
 {
-    [Header("Rün Bilgileri")]
-    public int runeID = 1;
-    public bool isCarried = false;
-    public bool isDelivered = false;
-
-    private void OnTriggerEnter(Collider other)
+    public class RuneStone : MonoBehaviour
     {
-        
-        if (other.CompareTag("Player") && !isCarried)
+        [Header("Rün Bilgileri")]
+        public int runeID = 1;
+        public bool isCarried = false;
+        public bool isDelivered = false;
+
+        private void OnTriggerEnter(Collider other)
         {
-            Debug.Log($"Rün #{runeID} alýndý!");
+
+            if (other.CompareTag("Player") && !isCarried)
+            {
+                Debug.Log($"Rün #{runeID} alýndý!");
+            }
         }
     }
 }

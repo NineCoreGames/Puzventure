@@ -1,12 +1,15 @@
 using UnityEngine;
 
-public class Hazard : MonoBehaviour
+namespace Puzventure.Berfin
 {
-    private void OnTriggerEnter(Collider other)
+    public class Hazard : MonoBehaviour
     {
-        if (other.TryGetComponent<RuneCarrier>(out var carrier))
+        private void OnTriggerEnter(Collider other)
         {
-            carrier.DropActiveRune();
+            if (other.TryGetComponent<RuneCarrier>(out var carrier))
+            {
+                carrier.DropActiveRune();
+            }
         }
     }
 }

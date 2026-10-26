@@ -1,51 +1,54 @@
 using UnityEngine;
 using static UnityEngine.Rendering.GPUSort;
 
-public class A_PlayerCarry : MonoBehaviour
+namespace Puzventure.Azra
 {
-    // Inspector'da atanacak: oyuncunun kafasýndaki taþýma noktasý
-    [SerializeField] private Transform carryPoint;
-
-    // Þu an taþýnan idol (null = eller boþ)
-    private A_Cargo carried;
-
-    // Baþka script'ler "elinde bir þey var mý?" diye soracak
-    public bool IsCarrying()
+    public class A_PlayerCarry : MonoBehaviour
     {
-        return carried != null;
-    }
+        // Inspector'da atanacak: oyuncunun kafasýndaki taþýma noktasý
+        [SerializeField] private Transform carryPoint;
 
-    // Courier bir trigger'a girdiðinde çalýþýr
-    void OnTriggerEnter(Collider other)
-    {
-        // Who? — dokunduðum þey idol mü?
-        A_Cargo cargo = other.GetComponent<A_Cargo>();
-        if (cargo == null) return;              // idol deðil ? çýk
+        // Þu an taþýnan idol (null = eller boþ)
+        private A_Cargo carried;
 
-        // Eller dolu mu?
-        if (IsCarrying()) return;                // dolu ? çýk
+        // Baþka script'ler "elinde bir þey var mý?" diye soracak
+        public bool IsCarrying()
+        {
+            return carried != null;
+        }
 
-        // Bu idol alýnabilir mi? (yeni düþmüþ olabilir)
-        if (!cargo.CanBePickedUp()) return;      // hayýr ? çýk
+        // Courier bir trigger'a girdiðinde çalýþýr
+        void OnTriggerEnter(Collider other)
+        {
+            // Who? — dokunduðum þey idol mü?
+            A_Cargo cargo = other.GetComponent<A_Cargo>();
+            if (cargo == null) return;              // idol deðil ? çýk
 
-        // Act — al ve kafana koy
-        carried = cargo;
-        cargo.PickUp(carryPoint);
-    }
+            // Eller dolu mu?
+            if (IsCarrying()) return;                // dolu ? çýk
 
-    // Tehlikeler bunu çaðýracak
-    public void DropCargo()
-    {
-        if (!IsCarrying()) return;
-        carried.Drop();
-        carried = null;
-    }
+            // Bu idol alýnabilir mi? (yeni düþmüþ olabilir)
+            if (!cargo.CanBePickedUp()) return;      // hayýr ? çýk
 
-    // Hedef zone bunu çaðýracak
-    public A_Cargo HandOver()
-    {
-        A_Cargo cargo = carried;
-        carried = null;          // eller boþaldý
-        return cargo;            // idolu geri ver
+            // Act — al ve kafana koy
+            carried = cargo;
+            cargo.PickUp(carryPoint);
+        }
+
+        // Tehlikeler bunu çaðýracak
+        public void DropCargo()
+        {
+            if (!IsCarrying()) return;
+            carried.Drop();
+            carried = null;
+        }
+
+        // Hedef zone bunu çaðýracak
+        public A_Cargo HandOver()
+        {
+            A_Cargo cargo = carried;
+            carried = null;          // eller boþaldý
+            return cargo;            // idolu geri ver
+        }
     }
 }

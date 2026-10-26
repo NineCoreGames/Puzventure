@@ -1,19 +1,22 @@
 using UnityEngine;
 
-public class FinishZone : MonoBehaviour
+namespace Puzventure.Omer
 {
-    private bool levelCompleted;
-
-    private void OnTriggerEnter(Collider other)
+    public class FinishZone : MonoBehaviour
     {
-        if (levelCompleted)
-            return;
+        private bool levelCompleted;
 
-        if (!other.CompareTag("Player"))
-            return;
+        private void OnTriggerEnter(Collider other)
+        {
+            if (levelCompleted)
+                return;
 
-        levelCompleted = true;
+            if (!other.CompareTag("Player"))
+                return;
 
-        Debug.Log("Tebrikler! Parkuru tamamladın.");
+            levelCompleted = true;
+
+            Debug.Log("Tebrikler! Parkuru tamamladın.");
+        }
     }
 }

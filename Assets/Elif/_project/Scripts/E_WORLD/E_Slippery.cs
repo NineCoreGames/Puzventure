@@ -1,18 +1,21 @@
 using UnityEngine;
 
-public class Slippery : MonoBehaviour
+namespace Puzventure.Elif
 {
-    [SerializeField] private float grip = 0.04f;
-
-    void OnCollisionEnter(Collision hit)
+    public class Slippery : MonoBehaviour
     {
-        PlayerMove move = hit.collider.GetComponent<PlayerMove>();
-        if (move != null) move.SetGrip(grip);
-    }
+        [SerializeField] private float grip = 0.04f;
 
-    void OnCollisionExit(Collision hit)
-    {
-        PlayerMove move = hit.collider.GetComponent<PlayerMove>();
-        if (move != null) move.SetGrip(1f);
+        void OnCollisionEnter(Collision hit)
+        {
+            PlayerMove move = hit.collider.GetComponent<PlayerMove>();
+            if (move != null) move.SetGrip(grip);
+        }
+
+        void OnCollisionExit(Collision hit)
+        {
+            PlayerMove move = hit.collider.GetComponent<PlayerMove>();
+            if (move != null) move.SetGrip(1f);
+        }
     }
 }

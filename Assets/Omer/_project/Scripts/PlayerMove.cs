@@ -2,89 +2,92 @@ using UnityEngine;
 
 using UnityEngine.InputSystem;
 
-public class PlayerMove : MonoBehaviour
-
+namespace Puzventure.Omer
 {
+    public class PlayerMove : MonoBehaviour
 
-// the three knobs of movement, shown in the Inspector
+    {
 
-[SerializeField] private float maxSpeed = 5f;
+    // the three knobs of movement, shown in the Inspector
 
-[SerializeField] private float acceleration = 40f;
+    [SerializeField] private float maxSpeed = 5f;
 
-[SerializeField] private float turnSpeed = 720f;
+    [SerializeField] private float acceleration = 40f;
 
-private Rigidbody rb;
+    [SerializeField] private float turnSpeed = 720f;
 
-private InputAction moveAction;
+    private Rigidbody rb;
 
-private Vector3 direction; // where the input points
+    private InputAction moveAction;
 
-private float grip = 1f; // 1 = normal ground
+    private Vector3 direction; // where the input points
 
-void Start()
+    private float grip = 1f; // 1 = normal ground
 
-{
+    void Start()
 
-rb = GetComponent<Rigidbody>();
+    {
 
-moveAction = InputSystem.actions.FindAction("Move");
+    rb = GetComponent<Rigidbody>();
 
-}
+    moveAction = InputSystem.actions.FindAction("Move");
 
-void Update()
+    }
 
-{
+    void Update()
 
-// every frame: read WASD, arrows or the left stick
+    {
 
-Vector2 input = moveAction.ReadValue<Vector2>();
+    // every frame: read WASD, arrows or the left stick
 
-direction = new Vector3(input.x, 0f, input.y);
+    Vector2 input = moveAction.ReadValue<Vector2>();
 
-}
-void FixedUpdate()
+    direction = new Vector3(input.x, 0f, input.y);
 
-{
+    }
+    void FixedUpdate()
 
-// speed we want, speed we have (not up/down)
+    {
 
-    Vector3 wanted = direction * maxSpeed;
+    // speed we want, speed we have (not up/down)
 
-    Vector3 v = rb.linearVelocity;
+        Vector3 wanted = direction * maxSpeed;
 
-    Vector3 flat = new Vector3(v.x, 0f, v.z);
+        Vector3 v = rb.linearVelocity;
 
-// get a little closer to the wanted speed
+        Vector3 flat = new Vector3(v.x, 0f, v.z);
 
-    float step = acceleration * grip * Time.fixedDeltaTime;
+    // get a little closer to the wanted speed
 
-    flat = Vector3.MoveTowards(flat, wanted, step);
+        float step = acceleration * grip * Time.fixedDeltaTime;
 
-    rb.linearVelocity = new Vector3(flat.x, v.y, flat.z);
+        flat = Vector3.MoveTowards(flat, wanted, step);
 
-// turn towards the way we are going
+        rb.linearVelocity = new Vector3(flat.x, v.y, flat.z);
 
-    if (direction == Vector3.zero) return;
+    // turn towards the way we are going
 
-    Quaternion look = Quaternion.LookRotation(direction);
+        if (direction == Vector3.zero) return;
 
-    float turn = turnSpeed * Time.fixedDeltaTime;
+        Quaternion look = Quaternion.LookRotation(direction);
 
-    look = Quaternion.RotateTowards(rb.rotation, look, turn);
+        float turn = turnSpeed * Time.fixedDeltaTime;
 
-    rb.MoveRotation(look);
+        look = Quaternion.RotateTowards(rb.rotation, look, turn);
 
-}
+        rb.MoveRotation(look);
 
-// the icy ramp calls this
+    }
 
-public void SetGrip(float value)
+    // the icy ramp calls this
 
-{
+    public void SetGrip(float value)
 
-    grip = value;
+    {
 
-}
+        grip = value;
 
+    }
+
+    }
 }

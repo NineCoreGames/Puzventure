@@ -1,25 +1,28 @@
 using UnityEngine;
 
-public class FallZone : MonoBehaviour
+namespace Puzventure.Omer
 {
-    private void OnTriggerEnter(Collider other)
+    public class FallZone : MonoBehaviour
     {
-        if (!other.CompareTag("Player"))
-            return;
-
-        Rigidbody rb = other.attachedRigidbody;
-
-        if (rb != null)
+        private void OnTriggerEnter(Collider other)
         {
-            rb.linearVelocity = Vector3.zero;
-        }
+            if (!other.CompareTag("Player"))
+                return;
 
-        other.transform.position = new Vector3(-3f, 1.5f, 5f);
-        foreach (FallingPlatform p in FindObjectsByType<FallingPlatform>())
-        {
-            p.ResetPlatform();
-        }
+            Rigidbody rb = other.attachedRigidbody;
 
-        Debug.Log("Başlangıç noktasına dönüldü.");
+            if (rb != null)
+            {
+                rb.linearVelocity = Vector3.zero;
+            }
+
+            other.transform.position = new Vector3(-3f, 1.5f, 5f);
+            foreach (FallingPlatform p in FindObjectsByType<FallingPlatform>())
+            {
+                p.ResetPlatform();
+            }
+
+            Debug.Log("Başlangıç noktasına dönüldü.");
+        }
     }
 }

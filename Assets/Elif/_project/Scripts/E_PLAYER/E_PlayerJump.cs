@@ -1,30 +1,33 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerJump : MonoBehaviour
+namespace Puzventure.Elif
 {
-    [SerializeField] private float jumpForce = 5f;
-    [SerializeField] private LayerMask groundLayers;
-
-    private Rigidbody rb;
-    private InputAction jumpAction;
-
-    void Start()
+    public class PlayerJump : MonoBehaviour
     {
-        rb = GetComponent<Rigidbody>();
-        jumpAction = InputSystem.actions.FindAction("Jump");
-    }
+        [SerializeField] private float jumpForce = 5f;
+        [SerializeField] private LayerMask groundLayers;
 
-    void Update()
-    {
-        if (!jumpAction.WasPressedThisFrame()) return;
-        if (!IsGrounded()) return;
+        private Rigidbody rb;
+        private InputAction jumpAction;
 
-        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-    }
+        void Start()
+        {
+            rb = GetComponent<Rigidbody>();
+            jumpAction = InputSystem.actions.FindAction("Jump");
+        }
 
-    bool IsGrounded()
-    {
-        return Physics.Raycast(transform.position, Vector3.down, 1.1f, groundLayers);
+        void Update()
+        {
+            if (!jumpAction.WasPressedThisFrame()) return;
+            if (!IsGrounded()) return;
+
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        }
+
+        bool IsGrounded()
+        {
+            return Physics.Raycast(transform.position, Vector3.down, 1.1f, groundLayers);
+        }
     }
 }

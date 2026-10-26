@@ -1,22 +1,25 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class A_PlayerDrop : MonoBehaviour
+namespace Puzventure.Azra
 {
-    private A_PlayerCarry carry;
-    private InputAction dropAction;
-
-    void Start()
+    public class A_PlayerDrop : MonoBehaviour
     {
-        // Ayný objedeki PlayerCarry'yi bul
-        carry = GetComponent<A_PlayerCarry>();
-        // Interact = E tuþu veya gamepad'in North butonu
-        dropAction = InputSystem.actions.FindAction("Interact");
-    }
+        private A_PlayerCarry carry;
+        private InputAction dropAction;
 
-    void Update()
-    {
-        // E basýldýysa ? PlayerCarry'ye düþür de
-        if (dropAction.WasPressedThisFrame()) carry.DropCargo();
+        void Start()
+        {
+            // Ayný objedeki PlayerCarry'yi bul
+            carry = GetComponent<A_PlayerCarry>();
+            // Interact = E tuþu veya gamepad'in North butonu
+            dropAction = InputSystem.actions.FindAction("Interact");
+        }
+
+        void Update()
+        {
+            // E basýldýysa ? PlayerCarry'ye düþür de
+            if (dropAction.WasPressedThisFrame()) carry.DropCargo();
+        }
     }
 }

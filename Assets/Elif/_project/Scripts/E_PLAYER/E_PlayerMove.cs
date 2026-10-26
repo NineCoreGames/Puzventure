@@ -1,48 +1,51 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerMove : MonoBehaviour
+namespace Puzventure.Elif
 {
-    [SerializeField] private float maxSpeed = 5f;
-    [SerializeField] private float acceleration = 40f;
-    [SerializeField] private float turnSpeed = 720f;
-
-    private Rigidbody rb;
-    private InputAction moveAction;
-    private Vector3 direction;
-    private float grip = 1f;
-
-    void Start()
+    public class PlayerMove : MonoBehaviour
     {
-        rb = GetComponent<Rigidbody>();
-        moveAction = InputSystem.actions.FindAction("Move");
-    }
+        [SerializeField] private float maxSpeed = 5f;
+        [SerializeField] private float acceleration = 40f;
+        [SerializeField] private float turnSpeed = 720f;
 
-    void Update()
-    {
-        Vector2 input = moveAction.ReadValue<Vector2>();
-        direction = new Vector3(input.x, 0f, input.y);
-    }
+        private Rigidbody rb;
+        private InputAction moveAction;
+        private Vector3 direction;
+        private float grip = 1f;
 
-    void FixedUpdate()
-    {
-        Vector3 wanted = direction * maxSpeed;
-        Vector3 v = rb.linearVelocity;
-        Vector3 flat = new Vector3(v.x, 0f, v.z);
+        void Start()
+        {
+            rb = GetComponent<Rigidbody>();
+            moveAction = InputSystem.actions.FindAction("Move");
+        }
 
-        float step = acceleration * grip * Time.fixedDeltaTime;
-        flat = Vector3.MoveTowards(flat, wanted, step);
-        rb.linearVelocity = new Vector3(flat.x, v.y, flat.z);
+        void Update()
+        {
+            Vector2 input = moveAction.ReadValue<Vector2>();
+            direction = new Vector3(input.x, 0f, input.y);
+        }
 
-        if (direction == Vector3.zero) return;
-        Quaternion look = Quaternion.LookRotation(direction);
-        float turn = turnSpeed * Time.fixedDeltaTime;
-        look = Quaternion.RotateTowards(rb.rotation, look, turn);
-        rb.MoveRotation(look);
-    }
+        void FixedUpdate()
+        {
+            Vector3 wanted = direction * maxSpeed;
+            Vector3 v = rb.linearVelocity;
+            Vector3 flat = new Vector3(v.x, 0f, v.z);
 
-    public void SetGrip(float value)
-    {
-        grip = value;
+            float step = acceleration * grip * Time.fixedDeltaTime;
+            flat = Vector3.MoveTowards(flat, wanted, step);
+            rb.linearVelocity = new Vector3(flat.x, v.y, flat.z);
+
+            if (direction == Vector3.zero) return;
+            Quaternion look = Quaternion.LookRotation(direction);
+            float turn = turnSpeed * Time.fixedDeltaTime;
+            look = Quaternion.RotateTowards(rb.rotation, look, turn);
+            rb.MoveRotation(look);
+        }
+
+        public void SetGrip(float value)
+        {
+            grip = value;
+        }
     }
 }

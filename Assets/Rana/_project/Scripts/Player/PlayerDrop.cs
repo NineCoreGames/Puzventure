@@ -1,26 +1,29 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerDrop : MonoBehaviour
+namespace Puzventure.Rana
 {
-    private ExplorerCarry carry;
-    private InputAction dropAction;
-
-    void Start()
+    public class PlayerDrop : MonoBehaviour
     {
-        // Karakterin üstündeki mevcut taþýma script'ini alýyoruz
-        carry = GetComponent<ExplorerCarry>();
+        private ExplorerCarry carry;
+        private InputAction dropAction;
 
-        // "Interact" aksiyonu = E tuþu veya Gamepad North (Y / Üçgen) butonu
-        dropAction = InputSystem.actions.FindAction("Interact");
-    }
-
-    void Update()
-    {
-        // E tuþuna basýldýðýnda eldeki rünü yere býrak
-        if (dropAction.WasPressedThisFrame() && carry != null)
+        void Start()
         {
-            carry.DropRune();
+            // Karakterin üstündeki mevcut taþýma script'ini alýyoruz
+            carry = GetComponent<ExplorerCarry>();
+
+            // "Interact" aksiyonu = E tuþu veya Gamepad North (Y / Üçgen) butonu
+            dropAction = InputSystem.actions.FindAction("Interact");
+        }
+
+        void Update()
+        {
+            // E tuþuna basýldýðýnda eldeki rünü yere býrak
+            if (dropAction.WasPressedThisFrame() && carry != null)
+            {
+                carry.DropRune();
+            }
         }
     }
 }

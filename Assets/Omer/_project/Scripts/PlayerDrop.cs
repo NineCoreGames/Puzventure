@@ -2,36 +2,39 @@ using UnityEngine;
 
 using UnityEngine.InputSystem;
 
-public class PlayerDrop : MonoBehaviour
-
+namespace Puzventure.Omer
 {
-
-    private PlayerCarry carry;
-
-    private InputAction dropAction;
-
-    void Start()
+    public class PlayerDrop : MonoBehaviour
 
     {
 
-// our own PlayerCarry, on this same object
+        private PlayerCarry carry;
 
-        carry = GetComponent<PlayerCarry>();
+        private InputAction dropAction;
 
-// "Interact" = the E key or the gamepad's North button
+        void Start()
 
-        dropAction = InputSystem.actions.FindAction("Interact");
+        {
+
+    // our own PlayerCarry, on this same object
+
+            carry = GetComponent<PlayerCarry>();
+
+    // "Interact" = the E key or the gamepad's North button
+
+            dropAction = InputSystem.actions.FindAction("Interact");
+
+        }
+
+        void Update()
+
+        {
+
+    // one press = one drop (DropCargo checks the hands)
+
+            if (dropAction.WasPressedThisFrame()) carry.DropCargo();
+
+        }
 
     }
-
-    void Update()
-
-    {
-
-// one press = one drop (DropCargo checks the hands)
-
-        if (dropAction.WasPressedThisFrame()) carry.DropCargo();
-
-    }
-
 }

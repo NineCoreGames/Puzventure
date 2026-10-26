@@ -1,11 +1,14 @@
 using UnityEngine;
 
-public class RuneRotation : MonoBehaviour
+namespace Puzventure.Elif
 {
-    public float rotationSpeed = 60f;
-
-    void Update()
+    public class RuneRotation : MonoBehaviour
     {
-        transform.Rotate(0f, rotationSpeed * Time.deltaTime, 0f);
+        public float rotationSpeed = 60f;
+
+        void Update()
+        {
+            transform.Rotate(0f, rotationSpeed * Time.deltaTime, 0f);
+        }
     }
 }

@@ -1,54 +1,57 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerMove : MonoBehaviour
+namespace Puzventure.Rana
 {
-    // The three knobs of movement, shown in the Inspector
-    [SerializeField] private float maxSpeed = 5f;
-    [SerializeField] private float acceleration = 40f;
-    [SerializeField] private float turnSpeed = 720f;
-
-    private Rigidbody rb;
-    private InputAction moveAction;
-    private Vector3 direction; // where the input points
-    private float grip = 1f;   // 1 = normal ground
-
-    void Start()
+    public class PlayerMove : MonoBehaviour
     {
-        rb = GetComponent<Rigidbody>();
-        moveAction = InputSystem.actions.FindAction("Move");
-    }
+        // The three knobs of movement, shown in the Inspector
+        [SerializeField] private float maxSpeed = 5f;
+        [SerializeField] private float acceleration = 40f;
+        [SerializeField] private float turnSpeed = 720f;
 
-    void Update()
-    {
-        // Every frame: read WASD, arrows or the left stick
-        Vector2 input = moveAction.ReadValue<Vector2>();
-        direction = new Vector3(input.x, 0f, input.y);
-    }
+        private Rigidbody rb;
+        private InputAction moveAction;
+        private Vector3 direction; // where the input points
+        private float grip = 1f;   // 1 = normal ground
 
-    void FixedUpdate()
-    {
-        // Speed we want, speed we have (not up/down)
-        Vector3 wanted = direction * maxSpeed;
-        Vector3 v = rb.linearVelocity;
-        Vector3 flat = new Vector3(v.x, 0f, v.z);
+        void Start()
+        {
+            rb = GetComponent<Rigidbody>();
+            moveAction = InputSystem.actions.FindAction("Move");
+        }
 
-        // Get a little closer to the wanted speed
-        float step = acceleration * grip * Time.fixedDeltaTime;
-        flat = Vector3.MoveTowards(flat, wanted, step);
-        rb.linearVelocity = new Vector3(flat.x, v.y, flat.z);
+        void Update()
+        {
+            // Every frame: read WASD, arrows or the left stick
+            Vector2 input = moveAction.ReadValue<Vector2>();
+            direction = new Vector3(input.x, 0f, input.y);
+        }
 
-        // Turn towards the way we are going
-        if (direction == Vector3.zero) return;
-        Quaternion look = Quaternion.LookRotation(direction);
-        float turn = turnSpeed * Time.fixedDeltaTime;
-        look = Quaternion.RotateTowards(rb.rotation, look, turn);
-        rb.MoveRotation(look);
-    }
+        void FixedUpdate()
+        {
+            // Speed we want, speed we have (not up/down)
+            Vector3 wanted = direction * maxSpeed;
+            Vector3 v = rb.linearVelocity;
+            Vector3 flat = new Vector3(v.x, 0f, v.z);
 
-    // The icy ramp calls this
-    public void SetGrip(float value)
-    {
-        grip = value;
+            // Get a little closer to the wanted speed
+            float step = acceleration * grip * Time.fixedDeltaTime;
+            flat = Vector3.MoveTowards(flat, wanted, step);
+            rb.linearVelocity = new Vector3(flat.x, v.y, flat.z);
+
+            // Turn towards the way we are going
+            if (direction == Vector3.zero) return;
+            Quaternion look = Quaternion.LookRotation(direction);
+            float turn = turnSpeed * Time.fixedDeltaTime;
+            look = Quaternion.RotateTowards(rb.rotation, look, turn);
+            rb.MoveRotation(look);
+        }
+
+        // The icy ramp calls this
+        public void SetGrip(float value)
+        {
+            grip = value;
+        }
     }
 }

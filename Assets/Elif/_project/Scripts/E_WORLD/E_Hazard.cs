@@ -1,13 +1,16 @@
 using UnityEngine;
 
-public class Hazard : MonoBehaviour
+namespace Puzventure.Elif
 {
-    void OnTriggerEnter(Collider other)
+    public class Hazard : MonoBehaviour
     {
-        PlayerCarry carry = other.GetComponent<PlayerCarry>();
-        if (carry == null || !carry.IsCarrying()) return;
+        void OnTriggerEnter(Collider other)
+        {
+            PlayerCarry carry = other.GetComponent<PlayerCarry>();
+            if (carry == null || !carry.IsCarrying()) return;
 
-        carry.DropCargo();
-        Debug.Log("Tuzak: Rün fırlatıldı!");
+            carry.DropCargo();
+            Debug.Log("Tuzak: Rün fırlatıldı!");
+        }
     }
 }

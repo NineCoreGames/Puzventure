@@ -1,19 +1,23 @@
 using UnityEngine;
-public class Bobber : MonoBehaviour
+
+namespace Puzventure.Omer
 {
-    [SerializeField] private float bobHeight = 0.25f; 
-    [SerializeField] private float bobSpeed = 2f; 
-    private Vector3 startLocalPosition;
-    void Start()
+    public class Bobber : MonoBehaviour
     {
-        startLocalPosition = transform.localPosition; 
-    }
-    void Update()
-    {
-        float offset = Mathf.Sin(Time.time * bobSpeed) * bobHeight; 
-        transform.localPosition = startLocalPosition + Vector3.up * offset; 
+        [SerializeField] private float bobHeight = 0.25f; 
+        [SerializeField] private float bobSpeed = 2f; 
+        private Vector3 startLocalPosition;
+        void Start()
+        {
+            startLocalPosition = transform.localPosition; 
+        }
+        void Update()
+        {
+            float offset = Mathf.Sin(Time.time * bobSpeed) * bobHeight; 
+            transform.localPosition = startLocalPosition + Vector3.up * offset; 
 
-        
 
+
+        }
     }
 }

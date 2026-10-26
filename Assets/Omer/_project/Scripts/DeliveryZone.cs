@@ -1,15 +1,19 @@
 using UnityEngine;
-public class DeliveryZone : MonoBehaviour
+
+namespace Puzventure.Omer
 {
-    void OnTriggerEnter(Collider other)
+    public class DeliveryZone : MonoBehaviour
     {
-// Who? the courier, carrying cargo
-        PlayerCarry carry = other.GetComponent<PlayerCarry>();
-        if (carry == null) return;
-        if (!carry.IsCarrying()) return;
-// Act: take the cargo and remove it
-        Cargo cargo = carry.HandOver();
-        Destroy(cargo.gameObject);
-        Debug.Log("Delivered!");
+        void OnTriggerEnter(Collider other)
+        {
+    // Who? the courier, carrying cargo
+            PlayerCarry carry = other.GetComponent<PlayerCarry>();
+            if (carry == null) return;
+            if (!carry.IsCarrying()) return;
+    // Act: take the cargo and remove it
+            Cargo cargo = carry.HandOver();
+            Destroy(cargo.gameObject);
+            Debug.Log("Delivered!");
+        }
     }
 }
