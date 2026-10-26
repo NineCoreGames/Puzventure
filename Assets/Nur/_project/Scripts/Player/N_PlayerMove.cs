@@ -2,7 +2,7 @@ using UnityEngine;
 
 using UnityEngine.InputSystem;
 
-public class N_PlayerMove : MonoBehaviour
+public class PlayerMove : MonoBehaviour
 
 {
 
