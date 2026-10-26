@@ -1,23 +1,26 @@
 using UnityEngine;
 
-public class FrictionZone : MonoBehaviour
+namespace Puzventure.Berfin
 {
-    [Range(0.01f, 1f)]
-    [SerializeField] private float surfaceGrip = 0.05f;
-
-    private void OnCollisionEnter(Collision collision)
+    public class FrictionZone : MonoBehaviour
     {
-        if (collision.collider.TryGetComponent<PlayerController>(out var player))
+        [Range(0.01f, 1f)]
+        [SerializeField] private float surfaceGrip = 0.05f;
+
+        private void OnCollisionEnter(Collision collision)
         {
-            player.ModifyFriction(surfaceGrip);
+            if (collision.collider.TryGetComponent<PlayerController>(out var player))
+            {
+                player.ModifyFriction(surfaceGrip);
+            }
         }
-    }
 
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.collider.TryGetComponent<PlayerController>(out var player))
+        private void OnCollisionExit(Collision collision)
         {
-            player.ModifyFriction(1f);
+            if (collision.collider.TryGetComponent<PlayerController>(out var player))
+            {
+                player.ModifyFriction(1f);
+            }
         }
     }
 }

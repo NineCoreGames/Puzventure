@@ -1,16 +1,19 @@
 using UnityEngine;
 
-public class TempleHazard : MonoBehaviour
+namespace Puzventure.Rana
 {
-    void OnTriggerEnter(Collider other)
+    public class TempleHazard : MonoBehaviour
     {
-        // Gelen nesne kaþif mi ve rün taþýyor mu?
-        ExplorerCarry carry = other.GetComponent<ExplorerCarry>();
-        if (carry == null) return;
-        if (!carry.IsCarrying()) return;
+        void OnTriggerEnter(Collider other)
+        {
+            // Gelen nesne kaþif mi ve rün taþýyor mu?
+            ExplorerCarry carry = other.GetComponent<ExplorerCarry>();
+            if (carry == null) return;
+            if (!carry.IsCarrying()) return;
 
-        // Rün taþýný düþür ve konsola bilgi yaz
-        carry.DropRune();
-        Debug.Log(name + " run tasini dusurdu!");
+            // Rün taþýný düþür ve konsola bilgi yaz
+            carry.DropRune();
+            Debug.Log(name + " run tasini dusurdu!");
+        }
     }
 }
