@@ -1,29 +1,32 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Unity.Cinemachine;
 
 namespace Puzventure.Gokturk
 {
     public class Hazard : MonoBehaviour
-{
-    // solid hazard (player bumps into it)
-    void OnCollisionEnter(Collision collision)
     {
-        TryRestart(collision.collider);
-    }
 
-    // trigger hazard (player passes into it)
-    void OnTriggerEnter(Collider other)
-    {
-        TryRestart(other);
-    }
+        // solid hazard (player bumps into it)
+        void OnCollisionEnter(Collision collision)
+        {
+            TryRestart(collision.collider);
+        }
 
-    private void TryRestart(Collider other)
-    {
-        // only react to the player, not other objects
-        if (other.GetComponentInParent<PlayerMove>() == null) return;
+        // trigger hazard (player passes into it)
+        void OnTriggerEnter(Collider other)
+        {
 
-        // reload the scene we are in right now
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            TryRestart(other);
+        }
+
+        private void TryRestart(Collider other)
+        {
+            // only react to the player, not other objects
+            if (other.GetComponentInParent<PlayerMove>() == null) return;
+
+            // reload the scene we are in right now
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
     }
-}
 }
