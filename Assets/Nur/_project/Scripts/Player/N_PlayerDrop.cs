@@ -1,37 +1,23 @@
 using UnityEngine;
-
 using UnityEngine.InputSystem;
+using Puzventure.Gokturk;
 
-public class PlayerDrop : MonoBehaviour
-
+namespace Puzventure.Nur
 {
-
-    private PlayerCarry carry;
-
-    private InputAction dropAction;
-
-    void Start()
-
+    public class PlayerDrop : MonoBehaviour
     {
+        private PlayerCarry carry;
+        private InputAction dropAction;
 
-        // our own PlayerCarry, on this same object
+        void Start()
+        {
+            carry = GetComponent<PlayerCarry>();
+            dropAction = InputSystem.actions.FindAction("Interact");
+        }
 
-        carry = GetComponent<PlayerCarry>();
-
-        // "Interact" = the E key or the gamepad's North button
-
-        dropAction = InputSystem.actions.FindAction("Interact");
-
+        void Update()
+        {
+            if (dropAction.WasPressedThisFrame()) carry.DropCargo();
+        }
     }
-
-    void Update()
-
-    {
-
-        // one press = one drop (DropCargo checks the hands)
-
-        if (dropAction.WasPressedThisFrame()) carry.DropCargo();
-
-    }
-
 }
