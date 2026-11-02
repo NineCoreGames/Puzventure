@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.UIElements;
-public class Bobber : MonoBehaviour
+public class E_Bobber : MonoBehaviour
 {
     [SerializeField] private float bobHeight = 0.25f; // metres up and down
     [SerializeField] private float bobSpeed = 2f; // how fast it floats

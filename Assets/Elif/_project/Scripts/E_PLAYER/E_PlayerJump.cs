@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerJump : MonoBehaviour
+public class E_PlayerJump : MonoBehaviour
 {
     [SerializeField] private float jumpForce = 5f;
     [SerializeField] private LayerMask groundLayers;

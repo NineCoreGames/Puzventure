@@ -1,5 +1,5 @@
 using UnityEngine;
-public class Spinner : MonoBehaviour
+public class E_Spinner : MonoBehaviour
 {
     // degrees per SECOND
     [SerializeField] private float rotationSpeed = 90f;

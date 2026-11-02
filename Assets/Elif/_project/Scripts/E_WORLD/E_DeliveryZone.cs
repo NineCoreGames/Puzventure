@@ -1,13 +1,13 @@
 using UnityEngine;
 
-public class DeliveryZone : MonoBehaviour
+public class E_DeliveryZone : MonoBehaviour
 {
     void OnTriggerEnter(Collider other)
     {
-        PlayerCarry carry = other.GetComponent<PlayerCarry>();
+        E_PlayerCarry carry = other.GetComponent<E_PlayerCarry>();
         if (carry == null || !carry.IsCarrying()) return;
 
-        Cargo cargo = carry.HandOver();
+        E_Cargo cargo = carry.HandOver();
         Destroy(cargo.gameObject);
         Debug.Log("Rün Teslim Edildi!");
     }

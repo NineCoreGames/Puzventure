@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class PlayerCarry : MonoBehaviour
+public class E_PlayerCarry : MonoBehaviour
 {
     [SerializeField] private Transform carryPoint;
-    private Cargo carried;
+    private E_Cargo carried;
 
     public bool IsCarrying() => carried != null;
 
@@ -14,16 +14,16 @@ public class PlayerCarry : MonoBehaviour
         carried = null;
     }
 
-    public Cargo HandOver()
+    public E_Cargo HandOver()
     {
-        Cargo cargo = carried;
+        E_Cargo cargo = carried;
         carried = null;
         return cargo;
     }
 
     void OnTriggerEnter(Collider other)
     {
-        Cargo cargo = other.GetComponent<Cargo>();
+        E_Cargo cargo = other.GetComponent<E_Cargo>();
         if (cargo == null || IsCarrying() || !cargo.CanBePickedUp()) return;
 
         carried = cargo;

@@ -1,14 +1,14 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerDrop : MonoBehaviour
+public class E_PlayerDrop : MonoBehaviour
 {
-    private PlayerCarry carry;
+    private E_PlayerCarry carry;
     private InputAction dropAction;
 
     void Start()
     {
-        carry = GetComponent<PlayerCarry>();
+        carry = GetComponent<E_PlayerCarry>();
         dropAction = InputSystem.actions.FindAction("Interact");
     }
 
