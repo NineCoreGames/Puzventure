@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MovingHazard : MonoBehaviour
+public class Moving : MonoBehaviour
 {
     public Transform obstacleA;
     public Transform obstacleB;
