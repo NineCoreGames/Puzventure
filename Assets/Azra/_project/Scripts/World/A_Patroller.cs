@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Patroller : MonoBehaviour
+public class A_Patroller : MonoBehaviour
 {
     [SerializeField] private Transform pointB;
     [SerializeField] private float speed = 2f; // metre/saniye
