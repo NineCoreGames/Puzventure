@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class H_Cargo : MonoBehaviour
 {
+    [SerializeField] private H_CargoType type;
     private Rigidbody rb;
     private Collider box;
     private Collider range;
@@ -42,4 +43,14 @@ public class H_Cargo : MonoBehaviour
 
         canPickUpAt = Time.time + 0.5f;
     }
+    public int Points()
+    {
+        return type.Points();
+    }
+
+    public float Weight()
+    {
+        return type.Weight();
+    }
+
 }
