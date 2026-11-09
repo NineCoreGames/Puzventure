@@ -381,8 +381,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b69217a47dda835458df60df7bc6fac3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::A_DeliveryZone
-  needed: 3
+  scoreToOpen: 7
   gate: {fileID: 142865014}
+  returnPoint: {fileID: 1177447819}
 --- !u!4 &16755105 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7614501844282749312, guid: 02636bcfe89e9734493fc1f55a4ab8aa, type: 3}
