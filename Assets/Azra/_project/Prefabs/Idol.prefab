@@ -117,6 +117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0556689079715b044bea9ab9a8c5281d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::A_Cargo
+  type: {fileID: 11400000, guid: e34de1bdfcbafe547b29d619a4161996, type: 2}
   dropCooldown: 0.5
   dropPushUp: 2
   dropPushBack: 1

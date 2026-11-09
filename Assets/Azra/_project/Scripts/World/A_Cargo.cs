@@ -2,75 +2,73 @@ using UnityEngine;
 
 public class A_Cargo : MonoBehaviour
 {
+    // YENI (W06): hafif mi agir mi? bir veri dosyasi karar verir
+    [SerializeField] private A_CargoType type;
+
     [SerializeField] private float dropCooldown = 0.5f;
     [SerializeField] private float dropPushUp = 2f;
     [SerializeField] private float dropPushBack = 1f;
 
     private Rigidbody rb;
-    private Collider boxCollider;
-    private Collider pickupRange;
+    private Collider boxCollider;   // fiziksel govde
+    private Collider pickupRange;   // alma menzili (trigger)
     private float dropTime;
 
     void Awake()
     {
-        // Tüm component'leri bir kere bul, sonra hýzlý eriþ
+        // Tum component'leri bir kere bul
         rb = GetComponent<Rigidbody>();
-        boxCollider = GetComponent<BoxCollider>();
-
-        // Sphere Collider = pickup range (trigger)
-        // Ýki collider'ýmýz var: Box (fizik) + Sphere (trigger)
-        // GetComponents ile hepsini al, trigger olaný bul
         Collider[] colliders = GetComponents<Collider>();
         foreach (Collider c in colliders)
         {
             if (c.isTrigger) pickupRange = c;
             else boxCollider = c;
         }
+
+        // YENI: Type bos mu? kirmizi yazsin (W03'teki sessiz bos slot gibi olmasin)
+        if (type == null) Debug.LogError(name + ": no Cargo Type");
     }
 
-    // PlayerCarry soruyor: "Bu idol alýnabilir mi?"
+    // YENI: bu tas kac puan, ne kadar agir? cevabi turu verir
+    public int Points()
+    {
+        return type.Points();
+    }
+
+    public float Weight()
+    {
+        return type.Weight();
+    }
+
+    // PlayerCarry soruyor: "Bu idol alinabilir mi?"
     public bool CanBePickedUp()
     {
-        // Az önce düþmüþse (0.5 saniye içinde), hayýr
         return Time.time - dropTime > dropCooldown;
     }
 
-    // Oyuncu aldýðýnda çaðrýlýr
+    // Oyuncu aldiginda cagrilir
     public void PickUp(Transform carryPoint)
     {
-        // Fizik durur — biz taþýyacaðýz
-        rb.isKinematic = true;
-
-        // Collider'lar kapanýr — kafada takýlmasýn, bir daha alýnmasýn
-        boxCollider.enabled = false;
+        rb.isKinematic = true;                       // fizik durur
+        boxCollider.enabled = false;                 // kafada takilmasin
         if (pickupRange != null) pickupRange.enabled = false;
-
-        // Oyuncunun child'ý olur — kafasýnda taþýnýr
-        transform.SetParent(carryPoint);
-
-        // Tam CarryPoint'in üstüne otur
+        transform.SetParent(carryPoint);             // oyuncunun child'i olur
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
     }
 
-    // Oyuncu düþürdüðünde çaðrýlýr
+    // Oyuncu dusurdugunde cagrilir
     public void Drop()
     {
-        // Parent'tan çýk — artýk oyuncunun child'ý deðil
-        transform.SetParent(null);
-
-        // Fizik tekrar açýlýr
-        rb.isKinematic = false;
-
-        // Collider'lar geri açýlýr
+        transform.SetParent(null);                   // serbest
+        rb.isKinematic = false;                      // fizik tekrar
         boxCollider.enabled = true;
         if (pickupRange != null) pickupRange.enabled = true;
 
-        // Hafif yukarý ve geriye itme
+        // hafif yukari ve geriye itme
         Vector3 push = Vector3.up * dropPushUp + transform.forward * -dropPushBack;
-        rb.linearVelocity = push;    // Unity 6 doðru API (W1 Sayfa 10)
+        rb.linearVelocity = push;                    // Unity 6 API
 
-        // Kýsa bir süre tekrar alýnmasýn
-        dropTime = Time.time;
+        dropTime = Time.time;                        // kisa sure tekrar alinmasin
     }
 }
