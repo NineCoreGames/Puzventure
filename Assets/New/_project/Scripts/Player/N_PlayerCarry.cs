@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class PlayerCarry : MonoBehaviour
+public class N_PlayerCarry : MonoBehaviour
 {
     [SerializeField] private Transform carryPoint;
 
-    private Cargo carried;
+    private N_Cargo carried;
 
     public bool IsCarrying()
     {
@@ -13,7 +13,7 @@ public class PlayerCarry : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Cargo cargo = other.GetComponent<Cargo>();
+        N_Cargo cargo = other.GetComponent<N_Cargo>();
 
         if (cargo == null) return;
         if (IsCarrying()) return;
@@ -31,9 +31,9 @@ public class PlayerCarry : MonoBehaviour
         carried = null;
     }
 
-    public Cargo HandOver()
+    public N_Cargo HandOver()
     {
-        Cargo cargo = carried;
+        N_Cargo cargo = carried;
         carried = null;
         return cargo;
     }

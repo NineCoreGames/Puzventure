@@ -1,10 +1,13 @@
 using UnityEngine;
 
-public class Cargo : MonoBehaviour
+public class N_Cargo : MonoBehaviour
 {
+    [SerializeField] private N_CargoType type;
+
     private Rigidbody rb;
     private Collider box;
     private Collider range;
+
     private float canPickUpAt;
 
     void Awake()
@@ -12,6 +15,19 @@ public class Cargo : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         box = GetComponent<BoxCollider>();
         range = GetComponent<SphereCollider>();
+
+        if (type == null)
+            Debug.LogError(name + ": no Cargo Type");
+    }
+
+    public int Points()
+    {
+        return type.Points();
+    }
+
+    public float Weight()
+    {
+        return type.Weight();
     }
 
     public bool CanBePickedUp()
@@ -22,8 +38,10 @@ public class Cargo : MonoBehaviour
     public void PickUp(Transform carryPoint)
     {
         rb.isKinematic = true;
+
         box.enabled = false;
         range.enabled = false;
+
         transform.SetParent(carryPoint);
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
@@ -32,12 +50,15 @@ public class Cargo : MonoBehaviour
     public void Drop()
     {
         transform.SetParent(null);
+
         box.enabled = true;
         range.enabled = true;
+
         rb.isKinematic = false;
+
         Vector3 push = -transform.forward + Vector3.up;
         rb.AddForce(push * 3f, ForceMode.Impulse);
+
         canPickUpAt = Time.time + 0.5f;
     }
 }
-
