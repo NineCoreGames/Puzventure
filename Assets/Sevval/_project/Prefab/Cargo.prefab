@@ -117,6 +117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 022678138e3aa4441965597020e4cc5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Cargo
+  type: {fileID: 11400000, guid: f6a88cc0f9d38dc4eb391cc40da7a78b, type: 2}
 --- !u!1 &8951827833991283714
 GameObject:
   m_ObjectHideFlags: 0
@@ -243,7 +244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdf017c00c6ed7f43ae5c7d0d6ebfdbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Spinner
-  rotationSpeed: 90
+  rotationSpeed: {x: 0, y: 0, z: 0}
 --- !u!114 &5098325336742568990
 MonoBehaviour:
   m_ObjectHideFlags: 0
