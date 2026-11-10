@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class E_Cargo : MonoBehaviour
 {
+    [SerializeField] private E_CargoType type;
+
     private Rigidbody rb;
     private Collider box;
     private Collider range;
@@ -12,6 +14,8 @@ public class E_Cargo : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         box = GetComponent<BoxCollider>();
         range = GetComponent<SphereCollider>();
+
+        if (type == null) Debug.LogError(name + ": no Cargo Type");
     }
 
     void Start()
@@ -19,6 +23,16 @@ public class E_Cargo : MonoBehaviour
         // Oyun başladığında rünün yerçekimiyle zemine oturmasını sağlar
         rb.isKinematic = false;
         rb.useGravity = true;
+    }
+
+    public int Points()
+    {
+        return type.Points();
+    }
+
+    public float Weight()
+    {
+        return type.Weight();
     }
 
     public bool CanBePickedUp() => Time.time >= canPickUpAt;
