@@ -1,21 +1,24 @@
 using UnityEngine;
 
-public class AltarZone : MonoBehaviour
+namespace Puzventure.Rana
 {
-    private int deliveredCount = 0;
-
-    void OnTriggerEnter(Collider other)
+    public class AltarZone : MonoBehaviour
     {
-        // Gelen nesne ExplorerCarry bilesenine sahip kasif mi?
-        ExplorerCarry carry = other.GetComponent<ExplorerCarry>();
-        if (carry == null) return;
-        if (!carry.IsCarrying()) return;
+        private int deliveredCount = 0;
 
-        // Rünü kasiften al ve sahneden yok et
-        RuneStone rune = carry.DeliverRune();
-        Destroy(rune.gameObject);
+        void OnTriggerEnter(Collider other)
+        {
+            // Gelen nesne ExplorerCarry bilesenine sahip kasif mi?
+            ExplorerCarry carry = other.GetComponent<ExplorerCarry>();
+            if (carry == null) return;
+            if (!carry.IsCarrying()) return;
 
-        deliveredCount++;
-        Debug.Log($"Delivered! Sunak run tasini kabul etti. ({deliveredCount}/3)");
+            // Rünü kasiften al ve sahneden yok et
+            RuneStone rune = carry.DeliverRune();
+            Destroy(rune.gameObject);
+
+            deliveredCount++;
+            Debug.Log($"Delivered! Sunak run tasini kabul etti. ({deliveredCount}/3)");
+        }
     }
 }

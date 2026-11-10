@@ -1,24 +1,27 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(RuneCarrier))]
-public class PlayerDrop : MonoBehaviour
+namespace Puzventure.Berfin
 {
-    private RuneCarrier carrier;
-    private InputAction dropAction;
-
-    void Awake()
+    [RequireComponent(typeof(RuneCarrier))]
+    public class PlayerDrop : MonoBehaviour
     {
-        carrier = GetComponent<RuneCarrier>();
-        dropAction = InputSystem.actions.FindAction("Interact");
-    }
+        private RuneCarrier carrier;
+        private InputAction dropAction;
 
-    void Update()
-    {
-        // E tuşuna (veya Gamepad Interact) basıldığında rünü bırak
-        if (dropAction != null && dropAction.WasPressedThisFrame())
+        void Awake()
         {
-            carrier.DropActiveRune();
+            carrier = GetComponent<RuneCarrier>();
+            dropAction = InputSystem.actions.FindAction("Interact");
+        }
+
+        void Update()
+        {
+            // E tuşuna (veya Gamepad Interact) basıldığında rünü bırak
+            if (dropAction != null && dropAction.WasPressedThisFrame())
+            {
+                carrier.DropActiveRune();
+            }
         }
     }
 }

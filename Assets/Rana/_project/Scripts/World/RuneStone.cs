@@ -1,55 +1,58 @@
 using UnityEngine;
 
-public class RuneStone : MonoBehaviour
+namespace Puzventure.Rana
 {
-    private Rigidbody rb;
-    private Collider box;
-    private Collider range;
-    private float canPickUpAt;
-
-    void Awake()
+    public class RuneStone : MonoBehaviour
     {
-        // Kendi bilesenlerimizi hafizada tutuyoruz
-        rb = GetComponent<Rigidbody>();
-        box = GetComponent<BoxCollider>();
-        range = GetComponent<SphereCollider>();
-    }
+        private Rigidbody rb;
+        private Collider box;
+        private Collider range;
+        private float canPickUpAt;
 
-    public bool CanBePickedUp()
-    {
-        return Time.time >= canPickUpAt;
-    }
+        void Awake()
+        {
+            // Kendi bilesenlerimizi hafizada tutuyoruz
+            rb = GetComponent<Rigidbody>();
+            box = GetComponent<BoxCollider>();
+            range = GetComponent<SphereCollider>();
+        }
 
-    public void PickUp(Transform carryPoint)
-    {
-        // 1. Fizik motorunu durdur (Player ile carpismamasi icin kritik)
-        rb.isKinematic = true;
+        public bool CanBePickedUp()
+        {
+            return Time.time >= canPickUpAt;
+        }
 
-        // 2. Kendi carpisma kutularini kapat (Player'i firlatmasini onler)
-        if (box != null) box.enabled = false;
-        if (range != null) range.enabled = false;
+        public void PickUp(Transform carryPoint)
+        {
+            // 1. Fizik motorunu durdur (Player ile carpismamasi icin kritik)
+            rb.isKinematic = true;
 
-        // 3. Kasifin basinin ustundeki tasima noktasina bagla
-        transform.SetParent(carryPoint);
-        transform.localPosition = Vector3.zero;
-        transform.localRotation = Quaternion.identity;
-    }
+            // 2. Kendi carpisma kutularini kapat (Player'i firlatmasini onler)
+            if (box != null) box.enabled = false;
+            if (range != null) range.enabled = false;
 
-    public void Drop()
-    {
-        // Baglantiyi kopar
-        transform.SetParent(null);
+            // 3. Kasifin basinin ustundeki tasima noktasina bagla
+            transform.SetParent(carryPoint);
+            transform.localPosition = Vector3.zero;
+            transform.localRotation = Quaternion.identity;
+        }
 
-        // Carpisma kutularini ve fizigi tekrar ac
-        if (box != null) box.enabled = true;
-        if (range != null) range.enabled = true;
-        rb.isKinematic = false;
+        public void Drop()
+        {
+            // Baglantiyi kopar
+            transform.SetParent(null);
 
-        // Kasiften ileriye ve yukariya dogru firlat
-        Vector3 push = -transform.forward + Vector3.up;
-        rb.AddForce(push * 3f, ForceMode.Impulse);
+            // Carpisma kutularini ve fizigi tekrar ac
+            if (box != null) box.enabled = true;
+            if (range != null) range.enabled = true;
+            rb.isKinematic = false;
 
-        // 0.5 saniye boyunca hemen geri alinamaz
-        canPickUpAt = Time.time + 0.5f;
+            // Kasiften ileriye ve yukariya dogru firlat
+            Vector3 push = -transform.forward + Vector3.up;
+            rb.AddForce(push * 3f, ForceMode.Impulse);
+
+            // 0.5 saniye boyunca hemen geri alinamaz
+            canPickUpAt = Time.time + 0.5f;
+        }
     }
 }
