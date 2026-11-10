@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Rana
+namespace Puzventure.Rana
 {
     public class PlayerDrop : MonoBehaviour
     {
