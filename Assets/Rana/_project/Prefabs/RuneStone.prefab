@@ -68,7 +68,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 10bc1c4869006dc418826717541e43cb, type: 2}
+  - {fileID: 2100000, guid: be293ac45c1554ef7b8c1f7b60240c5d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -236,3 +236,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c64d7cf00a5fddb498d2aec7586aca41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RuneStone
+  type: {fileID: 11400000, guid: 3a26593c0e6643b4d909fec19c8cfc4c, type: 2}

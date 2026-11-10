@@ -4,51 +4,70 @@ namespace Puzventure.Rana
 {
     public class ExplorerCarry : MonoBehaviour
     {
-        [Header("Taþýma Noktasý")]
         [SerializeField] private Transform carryPoint;
+        private RuneStone carried;
+        private Rigidbody rb;
+        private float baseMass; // Karakterin yüksüz temel kütlesi
 
-        // Þu an taþýnan rün taþý (boþsa null)
-        private RuneStone carriedRune;
-
-        // Kaþifin eli dolu mu?
-        public bool IsCarrying()
+        void Start()
         {
-            return carriedRune != null;
+            rb = GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                baseMass = rb.mass;
+            }
         }
 
-        // Tuzaklara basýnca rünü düþür
+        public bool IsCarrying()
+        {
+            return carried != null;
+        }
+
+        void OnTriggerEnter(Collider other)
+        {
+            RuneStone rune = other.GetComponent<RuneStone>();
+            if (rune == null) return;
+            if (IsCarrying()) return;
+            if (!rune.CanBePickedUp()) return;
+
+            carried = rune;
+            rune.PickUp(carryPoint);
+
+            // Aðýr rün alýndýðýnda karaktere ekstra kütle ekle
+            if (rb != null)
+            {
+                rb.mass = baseMass + rune.Weight();
+            }
+        }
+
+        // Oyuncu rünü býraktýðýnda veya tuzaða çarptýðýnda çaðrýlýr
         public void DropRune()
         {
             if (!IsCarrying()) return;
 
-            carriedRune.Drop();
-            carriedRune = null;
+            carried.Drop();
+            carried = null;
+
+            // Kütleyi tekrar normale döndür
+            if (rb != null)
+            {
+                rb.mass = baseMass;
+            }
         }
 
-        // Sunaða gelindiðinde rünü teslim et
-        public RuneStone DeliverRune()
+        // Yeþil teslimat alanýna (AltarZone) girince çaðrýlýr
+        public RuneStone HandOver()
         {
-            RuneStone rune = carriedRune;
-            carriedRune = null;
+            RuneStone rune = carried;
+            carried = null;
+
+            // Kütleyi tekrar normale döndür
+            if (rb != null)
+            {
+                rb.mass = baseMass;
+            }
+
             return rune;
-        }
-
-        // Bir trigger alanýna girdiðimizde
-        private void OnTriggerEnter(Collider other)
-        {
-            // Temas edilen obje bir rün taþý mý?
-            RuneStone rune = other.GetComponent<RuneStone>();
-            if (rune == null) return;
-
-            // Kaþifin eli zaten doluysa ikinci rünü alamaz
-            if (IsCarrying()) return;
-
-            // Az önce düþürüldüyse hemen geri kapýlmasýný engelle (bekleme süresi)
-            if (!rune.CanBePickedUp()) return;
-
-            // Rünü al ve baþýnýn üstüne baðla
-            carriedRune = rune;
-            rune.PickUp(carryPoint);
         }
     }
 }

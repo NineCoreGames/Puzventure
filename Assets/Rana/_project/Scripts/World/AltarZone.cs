@@ -4,21 +4,24 @@ namespace Puzventure.Rana
 {
     public class AltarZone : MonoBehaviour
     {
-        private int deliveredCount = 0;
+        private int score; // Þimdiye kadar toplanan toplam puan
 
         void OnTriggerEnter(Collider other)
         {
-            // Gelen nesne ExplorerCarry bilesenine sahip kasif mi?
             ExplorerCarry carry = other.GetComponent<ExplorerCarry>();
             if (carry == null) return;
+
+            // Oyuncu elinde bir rün taþýmýyorsa iþlem yapma
             if (!carry.IsCarrying()) return;
 
-            // Rünü kasiften al ve sahneden yok et
-            RuneStone rune = carry.DeliverRune();
-            Destroy(rune.gameObject);
-
-            deliveredCount++;
-            Debug.Log($"Delivered! Sunak run tasini kabul etti. ({deliveredCount}/3)");
+            // Rünü teslim al, puanýný ekle ve objeyi yok et
+            RuneStone rune = carry.HandOver();
+            if (rune != null)
+            {
+                score += rune.Points();
+                Debug.Log("Delivered! +" + rune.Points() + " | Total Score: " + score);
+                Destroy(rune.gameObject);
+            }
         }
     }
 }
