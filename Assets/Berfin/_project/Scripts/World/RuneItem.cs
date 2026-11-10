@@ -1,46 +1,60 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody), typeof(Collider))]
-public class RuneItem : MonoBehaviour
+namespace Berfin
 {
-    [Header("Rune State")]
-    [SerializeField] private bool isCarried = false;
-
-    private Rigidbody runeRb;
-    private Collider runeCollider;
-
-    public bool IsCarried => isCarried;
-
-    void Awake()
+    [RequireComponent(typeof(Rigidbody))]
+    public class RuneItem : MonoBehaviour
     {
-        runeRb = GetComponent<Rigidbody>();
-        runeCollider = GetComponent<Collider>();
-    }
+        [Header("Data Type")]
+        [SerializeField] private RuneType type;
 
-    /// <summary>
-    /// Karakter rünü aldığında çağrılır: fizik etkilerini kapatır ve taşıyıcıya sabitler.
-    /// </summary>
-    public void AttachToCarrier(Transform mountPoint)
-    {
-        isCarried = true;
-        runeRb.isKinematic = true;
-        runeCollider.enabled = false;
+        private Rigidbody rb;
+        private Collider boxCol;
+        private Collider triggerCol;
+        private float canPickUpAt;
 
-        transform.SetParent(mountPoint);
-        transform.localPosition = Vector3.zero;
-        transform.localRotation = Quaternion.identity;
-    }
+        public int Points => type != null ? type.Points : 1;
+        public float Weight => type != null ? type.Weight : 0f;
 
-    /// <summary>
-    /// Rün düşürüldüğünde fizik kurallarını ve serbest hareketi geri yükler.
-    /// </summary>
-    public void ReleaseRune()
-    {
-        isCarried = false;
-        transform.SetParent(null);
+        private void Awake()
+        {
+            rb = GetComponent<Rigidbody>();
+            boxCol = GetComponent<BoxCollider>();
+            triggerCol = GetComponent<SphereCollider>();
 
-        runeCollider.enabled = true;
-        runeRb.isKinematic = false;
-        runeRb.linearVelocity = Vector3.zero;
+            if (type == null)
+            {
+                Debug.LogError($"{name}: Rune Type atanmamış!", this);
+            }
+        }
+
+        public bool CanBePickedUp()
+        {
+            return Time.time > canPickUpAt;
+        }
+
+        public void PickUp(Transform carryPoint)
+        {
+            rb.isKinematic = true;
+            if (boxCol != null) boxCol.enabled = false;
+            if (triggerCol != null) triggerCol.enabled = false;
+
+            transform.SetParent(carryPoint);
+            transform.localPosition = Vector3.zero;
+            transform.localRotation = Quaternion.identity;
+        }
+
+        public void Drop()
+        {
+            transform.SetParent(null);
+            if (boxCol != null) boxCol.enabled = true;
+            if (triggerCol != null) triggerCol.enabled = true;
+
+            rb.isKinematic = false;
+            Vector3 push = -transform.forward + Vector3.up;
+            rb.AddForce(push * 3f, ForceMode.Impulse);
+
+            canPickUpAt = Time.time + 0.5f;
+        }
     }
 }
