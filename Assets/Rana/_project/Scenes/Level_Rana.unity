@@ -2192,6 +2192,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc53cb55ae125ab4cb926eef4e642d9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Patroller
+  pointA: {fileID: 1977123227}
   pointB: {fileID: 1729100496}
   speed: 2
 --- !u!114 &1977123229
