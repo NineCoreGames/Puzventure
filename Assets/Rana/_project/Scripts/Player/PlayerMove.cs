@@ -14,18 +14,39 @@ namespace Puzventure.Rana
         private InputAction moveAction;
         private Vector3 direction; // where the input points
         private float grip = 1f;   // 1 = normal ground
+        private Camera mainCamera;
 
         void Start()
         {
             rb = GetComponent<Rigidbody>();
             moveAction = InputSystem.actions.FindAction("Move");
+            mainCamera = Camera.main;
         }
 
         void Update()
         {
             // Every frame: read WASD, arrows or the left stick
             Vector2 input = moveAction.ReadValue<Vector2>();
-            direction = new Vector3(input.x, 0f, input.y);
+
+            if (input.sqrMagnitude > 0.001f && mainCamera != null)
+            {
+                // Kameranýn ileri ve sað yönlerini al
+                Vector3 forward = mainCamera.transform.forward;
+                Vector3 right = mainCamera.transform.right;
+
+                // Yüksekliði (yukarý/aþaðý eðimi) sýfýrla ki karakter yere paralel hareket etsin
+                forward.y = 0f;
+                right.y = 0f;
+                forward.Normalize();
+                right.Normalize();
+
+                // Girdiyi kameranýn baktýðý yöne dönüþtür
+                direction = (forward * input.y + right * input.x).normalized;
+            }
+            else
+            {
+                direction = Vector3.zero;
+            }
         }
 
         void FixedUpdate()
