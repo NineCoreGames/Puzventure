@@ -4,123 +4,132 @@ using UnityEngine.InputSystem;
 
 namespace Sevval
 {
-
-public class PlayerMove : MonoBehaviour
-{
-    [Header("Movement")]
-    [SerializeField] private float maxSpeed = 5f;
-    [SerializeField] private float acceleration = 40f;
-    [SerializeField] private float turnSpeed = 720f;
-
-    [Header("Camera")]
-    [SerializeField] private Transform cameraTransform;
-
-    private Rigidbody rb;
-    private InputAction moveAction;
-    private Vector3 direction;
-    private float grip = 1f;
-
-    void Start()
+    public class PlayerMove : MonoBehaviour
     {
-        rb = GetComponent<Rigidbody>();
+        [Header("Movement")]
+        [SerializeField] private float maxSpeed = 5f;
+        [SerializeField] private float acceleration = 40f;
+        [SerializeField] private float turnSpeed = 720f;
 
-        if (rb == null)
+        [Header("Camera")]
+        [SerializeField] private Transform cameraTransform;
+
+        private Rigidbody rb;
+        private InputAction moveAction;
+        private Vector3 direction;
+
+        private float grip = 1f;
+        private float weightMultiplier = 1f;
+
+        void Start()
         {
-            Debug.LogError("Player üzerinde Rigidbody bulunamadı!");
-            enabled = false;
-            return;
+            rb = GetComponent<Rigidbody>();
+
+            if (rb == null)
+            {
+                Debug.LogError("Player üzerinde Rigidbody bulunamadı!");
+                enabled = false;
+                return;
+            }
+
+            if (cameraTransform == null && Camera.main != null)
+            {
+                cameraTransform = Camera.main.transform;
+            }
+
+            if (cameraTransform == null)
+            {
+                Debug.LogError("PlayerMove: Camera Transform atanmamış!");
+            }
+
+            moveAction = InputSystem.actions?.FindAction("Move");
+
+            if (moveAction == null)
+            {
+                Debug.LogError(
+                    "Move action bulunamadı! Input Actions içinde action adı Move olmalı."
+                );
+            }
+            else if (!moveAction.enabled)
+            {
+                moveAction.Enable();
+            }
         }
 
-        if (cameraTransform == null && Camera.main != null)
+        void Update()
         {
-            cameraTransform = Camera.main.transform;
+            if (moveAction == null || cameraTransform == null)
+                return;
+
+            Vector2 input = moveAction.ReadValue<Vector2>();
+
+            Vector3 forward = cameraTransform.forward;
+            Vector3 right = cameraTransform.right;
+
+            forward.y = 0f;
+            right.y = 0f;
+
+            forward.Normalize();
+            right.Normalize();
+
+            direction = forward * input.y + right * input.x;
+            direction = Vector3.ClampMagnitude(direction, 1f);
         }
 
-        if (cameraTransform == null)
+        void FixedUpdate()
         {
-            Debug.LogError("PlayerMove: Camera Transform atanmamış!");
-        }
+            if (rb == null)
+                return;
 
-        moveAction = InputSystem.actions?.FindAction("Move");
+            Vector3 velocity = rb.linearVelocity;
 
-        if (moveAction == null)
-        {
-            Debug.LogError(
-                "Move action bulunamadı! Input Actions içinde action adı Move olmalı."
-            );
-        }
-        else if (!moveAction.enabled)
-        {
-            moveAction.Enable();
-        }
-    }
-
-    void Update()
-    {
-        if (moveAction == null || cameraTransform == null)
-            return;
-
-        Vector2 input = moveAction.ReadValue<Vector2>();
-
-        Vector3 forward = cameraTransform.forward;
-        Vector3 right = cameraTransform.right;
-
-        forward.y = 0f;
-        right.y = 0f;
-
-        forward.Normalize();
-        right.Normalize();
-
-        direction = forward * input.y + right * input.x;
-        direction = Vector3.ClampMagnitude(direction, 1f);
-    }
-
-    void FixedUpdate()
-    {
-        if (rb == null)
-            return;
-
-        Vector3 velocity = rb.linearVelocity;
-
-        Vector3 flatVelocity = new Vector3(
-            velocity.x,
-            0f,
-            velocity.z
-        );
-
-        Vector3 targetVelocity = direction * maxSpeed;
-        float step = acceleration * grip * Time.fixedDeltaTime;
-
-        flatVelocity = Vector3.MoveTowards(
-            flatVelocity,
-            targetVelocity,
-            step
-        );
-
-        rb.linearVelocity = new Vector3(
-            flatVelocity.x,
-            velocity.y,
-            flatVelocity.z
-        );
-
-        if (direction.sqrMagnitude > 0.001f)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(direction);
-
-            Quaternion newRotation = Quaternion.RotateTowards(
-                rb.rotation,
-                targetRotation,
-                turnSpeed * Time.fixedDeltaTime
+            Vector3 flatVelocity = new Vector3(
+                velocity.x,
+                0f,
+                velocity.z
             );
 
-            rb.MoveRotation(newRotation);
+            Vector3 targetVelocity =
+                direction * maxSpeed * weightMultiplier;
+
+            float step = acceleration * grip * Time.fixedDeltaTime;
+
+            flatVelocity = Vector3.MoveTowards(
+                flatVelocity,
+                targetVelocity,
+                step
+            );
+
+            rb.linearVelocity = new Vector3(
+                flatVelocity.x,
+                velocity.y,
+                flatVelocity.z
+            );
+
+            if (direction.sqrMagnitude > 0.001f)
+            {
+                Quaternion targetRotation =
+                    Quaternion.LookRotation(direction);
+
+                Quaternion newRotation = Quaternion.RotateTowards(
+                    rb.rotation,
+                    targetRotation,
+                    turnSpeed * Time.fixedDeltaTime
+                );
+
+                rb.MoveRotation(newRotation);
+            }
+        }
+
+        public void SetGrip(float value)
+        {
+            grip = Mathf.Max(0f, value);
+        }
+
+        // Taş ağırlığına göre hareket hızını ayarla
+        public void SetWeight(float multiplier)
+        {
+            weightMultiplier = Mathf.Clamp(multiplier, 0.4f, 1f);
         }
     }
-
-    public void SetGrip(float value)
-    {
-        grip = Mathf.Max(0f, value);
-    }
-}
-
 }

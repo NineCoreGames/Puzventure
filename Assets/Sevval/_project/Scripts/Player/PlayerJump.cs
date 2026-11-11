@@ -1,62 +1,67 @@
+
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Sevval
 {
-
-using UnityEngine.InputSystem;
-
-public class PlayerJump : MonoBehaviour
-
-{
-
-    [SerializeField] private float jumpForce = 6f;
-
-    // which layers count as ground: set it to Ground!
-
-    [SerializeField] private LayerMask groundLayers;
-
-    private Rigidbody rb;
-
-    private InputAction jumpAction;
-
-    void Start()
-
+    public class PlayerJump : MonoBehaviour
     {
+        [Header("Jump")]
+        [SerializeField] private float jumpForce = 5f;
 
-        rb = GetComponent<Rigidbody>();
+        [Header("Ground Check")]
+        [SerializeField] private LayerMask groundLayers;
 
-        jumpAction = InputSystem.actions.FindAction("Jump");
+        private Rigidbody rb;
+        private InputAction jumpAction;
+        private PlayerInventory inventory;
 
+        void Start()
+        {
+            rb = GetComponent<Rigidbody>();
+            inventory = GetComponent<PlayerInventory>();
+
+            jumpAction = InputSystem.actions.FindAction("Jump");
+
+            if (jumpAction == null)
+            {
+                Debug.LogError("Jump action bulunamadı!");
+            }
+        }
+
+        void Update()
+        {
+            if (jumpAction == null) return;
+
+            if (!jumpAction.WasPressedThisFrame()) return;
+
+            if (!IsGrounded()) return;
+
+            float weightMultiplier = 1f;
+
+            if (inventory != null)
+            {
+                weightMultiplier = Mathf.Clamp(
+                    1f - (inventory.TotalStoneWeight * 0.1f),
+                    0.4f,
+                    1f
+                );
+            }
+
+            rb.AddForce(
+                Vector3.up * jumpForce * weightMultiplier,
+                ForceMode.Impulse
+            );
+        }
+
+        bool IsGrounded()
+        {
+            return Physics.Raycast(
+                transform.position,
+                Vector3.down,
+                1.1f,
+                groundLayers
+            );
+        }
     }
-    void Update()
-
-    {
-
-        // only in the frame Space / South button goes down
-
-        if (!jumpAction.WasPressedThisFrame()) return;
-
-        if (!IsGrounded()) return; // no jumping in the air
-
-        // one short kick upwards
-
-        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-
-    }
-
-    // is there Ground right under our feet?
-
-    bool IsGrounded()
-
-    {
-
-        // from our middle, 1.1 m down: half our height + 0.1
-
-        return Physics.Raycast(transform.position, Vector3.down,
-
-        1.1f, groundLayers);
-
-    }
-
-}
 }
