@@ -1,31 +1,57 @@
+using System.Collections;
 using UnityEngine;
 
 namespace Puzventure.Rana
 {
     public class RuneSpawner : MonoBehaviour
     {
-        // Kopyalanacak rün prefab'ý ve platformun ne kadar süre boþ kalacaðý
+        [Header("Spawn Settings")]
         [SerializeField] private GameObject runePrefab;
         [SerializeField] private float delay = 4f;
 
-        private float timer; // Yeni rün gelene kadar kalan saniye
+        [Header("Spawn Limit")]
+        [Tooltip("Ýþaretliyse sonsuz rün doðurur. Ýþaretli deðilse aþaðýdaki limit geçerlidir.")]
+        [SerializeField] private bool infinite = false;
+        [Tooltip("Bu platformdan toplam kaç adet rün doðabileceði.")]
+        [SerializeField] private int maxSpawnCount = 1;
 
-        void Update()
+        private int currentSpawnCount = 0;
+        private GameObject currentRune;
+
+        void Start()
         {
-            // Platformun üzerinde/altýnda hala bir rün duruyor mu? Varsa hiçbir þey yapma bekle
-            if (GetComponentInChildren<RuneStone>() != null) return;
+            StartCoroutine(SpawnRoutine());
+        }
 
-            // Rün alýnmýþsa geri say: her kare geçen süreyi düþ
-            timer -= Time.deltaTime;
+        private IEnumerator SpawnRoutine()
+        {
+            // Ýlk taþ için bekleme veya anýnda doðma
+            yield return new WaitForSeconds(0.1f);
 
-            // Süre dolmadýysa bekle
-            if (timer > 0f) return;
+            while (infinite || currentSpawnCount < maxSpawnCount)
+            {
+                if (currentRune == null)
+                {
+                    // Taþý platformun olduðu noktada doður
+                    currentRune = Instantiate(runePrefab, transform.position, Quaternion.identity);
+                    currentSpawnCount++;
 
-            // Süre doldu: Prefab'tan bu platformun üstüne bir kopya üret
-            Instantiate(runePrefab, transform.position, transform.rotation, transform);
+                    // Limit dolduysa döngüden çýk
+                    if (!infinite && currentSpawnCount >= maxSpawnCount)
+                    {
+                        yield break;
+                    }
+                }
 
-            // Bir sonraki bekleme süresini ayarla
-            timer = delay;
+                // Taþ oyuncu tarafýndan alýnana (yok olana) kadar bekle
+                while (currentRune != null)
+                {
+                    yield return null;
+                }
+
+                // Taþ alýndýktan sonra yeniden doðma süresini bekle
+                yield return new WaitForSeconds(delay);
+            }
         }
     }
 }
