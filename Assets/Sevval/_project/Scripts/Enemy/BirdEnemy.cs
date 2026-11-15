@@ -6,10 +6,10 @@ namespace Sevval
     public class BirdEnemy : MonoBehaviour
     {
         [Header("Movement")]
-        [SerializeField] private float moveSpeed = 4f;
-        [SerializeField] private float flyingHeight = 2.5f;
-        [SerializeField] private float orbitRadius = 2.5f;
-        [SerializeField] private float orbitSpeed = 1.5f;
+        [SerializeField] private float moveSpeed = 3f;
+        [SerializeField] private float flyingHeight = 2.2f;
+        [SerializeField] private float orbitRadius = 5f;
+        [SerializeField] private float orbitSpeed = 1f;
         [SerializeField] private float detectionDistance = 12f;
 
         private Vector3 startingPosition;

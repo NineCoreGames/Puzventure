@@ -8,7 +8,6 @@ namespace Sevval
         public enum ResourceType
         {
             Wood,
-            Stone,
             Potion
         }
 
@@ -34,10 +33,6 @@ namespace Sevval
                     inventory.AddWood(amount);
                     break;
 
-                case ResourceType.Stone:
-                    inventory.AddStone(amount);
-                    break;
-
                 case ResourceType.Potion:
                     inventory.AddPotion(amount);
 
@@ -53,7 +48,7 @@ namespace Sevval
             }
 
             collected = true;
-            Destroy(gameObject);
+
         }
     }
 }

@@ -6,15 +6,11 @@ namespace Sevval
 {
     public class PlayerAttack : MonoBehaviour
     {
-        [SerializeField] private GameObject stonePrefab;
-        [SerializeField] private Transform throwPoint;
-        [SerializeField] private float throwForce = 12f;
-
-        private PlayerInventory inventory;
+        private PlayerCarry playerCarry;
 
         private void Start()
         {
-            inventory = GetComponent<PlayerInventory>();
+            playerCarry = GetComponent<PlayerCarry>();
         }
 
         private void Update()
@@ -28,24 +24,10 @@ namespace Sevval
 
         private void ThrowStone()
         {
-            if (inventory == null || !inventory.UseStone())
-                return;
+            if (playerCarry == null) return;
+            if (!playerCarry.IsCarrying()) return;
 
-            GameObject stone = Instantiate(
-                stonePrefab,
-                throwPoint.position,
-                throwPoint.rotation
-            );
-
-            Rigidbody rb = stone.GetComponent<Rigidbody>();
-
-            if (rb != null)
-            {
-                rb.AddForce(
-                    throwPoint.forward * throwForce,
-                    ForceMode.Impulse
-                );
-            }
+            playerCarry.DropCargo();
         }
     }
 }

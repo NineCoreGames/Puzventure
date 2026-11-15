@@ -1,46 +1,131 @@
-using UnityEngine;
 
-namespace Sevval {
+using UnityEngine;
+using System.Collections.Generic;
+
+namespace Sevval
+{
     public class PlayerCarry : MonoBehaviour
     {
+        private PlayerInventory inventory;
+
         [SerializeField] private Transform carryPoint;
-        private Cargo carried; // null = hands empty
-        private Rigidbody rb; // the courier's body
-        private float baseMass; // its mass with empty hands
+        [SerializeField] private float stackSpacing = 0.35f;
+
+        private List<Cargo> carriedCargos = new List<Cargo>();
+
+        private Rigidbody rb;
+        private float baseMass;
+
         void Start()
         {
             rb = GetComponent<Rigidbody>();
-            baseMass = rb.mass;
+            inventory = GetComponent<PlayerInventory>();
+
+            if (rb != null)
+            {
+                baseMass = rb.mass;
+            }
         }
+
         public bool IsCarrying()
         {
-            return carried != null;
+            return carriedCargos.Count > 0;
         }
-        void OnTriggerEnter(Collider other)
+
+        private void OnTriggerEnter(Collider other)
         {
             Cargo cargo = other.GetComponent<Cargo>();
-            if (cargo == null) return; // not cargo
-            if (IsCarrying()) return; // hands full
-            if (!cargo.CanBePickedUp()) return; // just dropped
-            carried = cargo;
+
+            if (cargo == null) return;
+            if (!cargo.CanBePickedUp()) return;
+            if (carriedCargos.Contains(cargo)) return;
+
+            // Taşı listeye ekle
+            carriedCargos.Add(cargo);
+
+            // Envanterdeki taş sayısını artır
+            if (inventory != null && cargo.CountsAsStone())
+            {
+                inventory.AddStone(1);
+            }
+
+            // Taşı karakterin üzerine yerleştir
             cargo.PickUp(carryPoint);
-            rb.mass = baseMass + cargo.Weight(); // heavier courier
+
+            UpdateStack();
+            UpdateWeight();
         }
-        // the hazards and the E key call this
+
+        private void UpdateStack()
+        {
+            for (int i = 0; i < carriedCargos.Count; i++)
+            {
+                carriedCargos[i].transform.localPosition =
+                    Vector3.up * (i * stackSpacing);
+            }
+        }
+
+        private void UpdateWeight()
+        {
+            if (rb == null) return;
+
+            float totalWeight = 0f;
+
+            foreach (Cargo cargo in carriedCargos)
+            {
+                totalWeight += cargo.Weight();
+            }
+
+            rb.mass = baseMass + totalWeight;
+        }
+
+        // F tuşuyla taşı fırlat
         public void DropCargo()
         {
             if (!IsCarrying()) return;
-            carried.Drop();
-            carried = null;
-            rb.mass = baseMass; // light again
+
+            int lastIndex = carriedCargos.Count - 1;
+            Cargo cargo = carriedCargos[lastIndex];
+
+            carriedCargos.RemoveAt(lastIndex);
+
+            cargo.Drop();
+
+            // Envanterdeki taş sayısını azalt
+            if (inventory != null && cargo.CountsAsStone())
+            {
+                inventory.UseStone();
+            }
+
+            UpdateStack();
+            UpdateWeight();
         }
-        // the green zone calls this
+
+        // Hedef bölge taşı teslim aldığında çağrılır
         public Cargo HandOver()
         {
-            Cargo cargo = carried;
-            carried = null; // hands empty again
-            rb.mass = baseMass; // light again
+            if (!IsCarrying()) return null;
+
+            int lastIndex = carriedCargos.Count - 1;
+            Cargo cargo = carriedCargos[lastIndex];
+
+            carriedCargos.RemoveAt(lastIndex);
+
+            // Teslim edilen taş envanterden de çıkar
+            if (inventory != null && cargo.CountsAsStone())
+            {
+                inventory.UseStone();
+            }
+
+            UpdateStack();
+            UpdateWeight();
+
             return cargo;
+        }
+
+        public int GetCargoCount()
+        {
+            return carriedCargos.Count;
         }
     }
 }

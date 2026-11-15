@@ -27,6 +27,11 @@ namespace Sevval {
         {
             return type.Weight();
         }
+
+        public bool CountsAsStone()
+        {
+            return type != null && type.CountsAsStone();
+        }
         // a question: "can I be picked up now?"
         public bool CanBePickedUp()
         {
@@ -44,14 +49,23 @@ namespace Sevval {
         }
         public void Drop()
         {
-            transform.SetParent(null); // free again
+            transform.SetParent(null);
+
             box.enabled = true;
             range.enabled = true;
-            rb.isKinematic = false; // physics again
-                                    // push it back and up, away from the courier
-            Vector3 push = -transform.forward + Vector3.up;
-            rb.AddForce(push * 3f, ForceMode.Impulse);
-            // wait 0.5 s before it can be picked up again
+
+            rb.isKinematic = false;
+
+            // Oyuncunun baktığı yönü bul
+            Transform player = GameObject.FindGameObjectWithTag("Player").transform;
+
+            Vector3 direction = player.forward + Vector3.up * 0.35f;
+
+            direction.Normalize();
+
+            // Taşı daha güçlü fırlat
+            rb.AddForce(direction * 8f, ForceMode.Impulse);
+
             canPickUpAt = Time.time + 0.5f;
         }
     }

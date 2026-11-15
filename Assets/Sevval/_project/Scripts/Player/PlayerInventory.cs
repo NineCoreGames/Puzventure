@@ -49,7 +49,7 @@ namespace Sevval
             StoneCount += amount;
             UpdatePlayerWeight();
 
-            Debug.Log("Taş: " + StoneCount);
+            Debug.Log("TAŞ EKLENDİ! Yeni Count: " + StoneCount);
         }
 
         // Sağlık iksiri toplama

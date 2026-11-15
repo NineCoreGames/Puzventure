@@ -8,17 +8,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 143155269262664604, guid: a120bca433d51634ab8f2c56359f7e30, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4300000, guid: 8988c881874f4cb4db33f58b6a8e7416, type: 3}
     - target: {fileID: 3491106417092211029, guid: a120bca433d51634ab8f2c56359f7e30, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3491106417092211029, guid: a120bca433d51634ab8f2c56359f7e30, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3491106417092211029, guid: a120bca433d51634ab8f2c56359f7e30, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4912655406483606868, guid: a120bca433d51634ab8f2c56359f7e30, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4934566087990592454, guid: a120bca433d51634ab8f2c56359f7e30, type: 3}
       propertyPath: m_LocalPosition.x
@@ -73,6 +81,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: a45df7bae0ae9b2409e9e22d81e95ff2, type: 2}
     - target: {fileID: 6576274035603232960, guid: a120bca433d51634ab8f2c56359f7e30, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6576274035603232960, guid: a120bca433d51634ab8f2c56359f7e30, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 969477724276dd945901f28ce3e1f988, type: 2}
@@ -80,8 +92,31 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cargo_Heavy
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5098325336742568990, guid: a120bca433d51634ab8f2c56359f7e30, type: 3}
+    - {fileID: 5826394161663432477, guid: a120bca433d51634ab8f2c56359f7e30, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8546487311221045859, guid: a120bca433d51634ab8f2c56359f7e30, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4608320832138764477}
   m_SourcePrefab: {fileID: 100100000, guid: a120bca433d51634ab8f2c56359f7e30, type: 3}
+--- !u!1 &4074447890119724909 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8546487311221045859, guid: a120bca433d51634ab8f2c56359f7e30, type: 3}
+  m_PrefabInstance: {fileID: 5625101665622013198}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4608320832138764477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4074447890119724909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef269a7746cf7f8418f1339c76e67948, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Sevval.StoneProjectile
+  damage: 25

@@ -5,7 +5,7 @@ namespace Sevval
 {
     public class StoneProjectile : MonoBehaviour
     {
-        [SerializeField] private int damage = 25;
+        [SerializeField] private int damage = 15;
 
         private void OnCollisionEnter(Collision collision)
         {

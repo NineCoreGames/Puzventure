@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1103814744865934988}
   - component: {fileID: 7100356474094455924}
   - component: {fileID: -7616395481484040589}
+  - component: {fileID: -3737144181960573186}
   m_Layer: 0
   m_Name: ThrowableStone
   m_TagString: Untagged
@@ -154,3 +155,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Sevval.StoneProjectile
   damage: 25
+--- !u!114 &-3737144181960573186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5826245950975800307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 022678138e3aa4441965597020e4cc5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Sevval.Cargo
+  type: {fileID: 11400000, guid: a45df7bae0ae9b2409e9e22d81e95ff2, type: 2}
