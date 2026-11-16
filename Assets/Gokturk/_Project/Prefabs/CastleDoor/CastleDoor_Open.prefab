@@ -398,7 +398,7 @@ GameObject:
   - component: {fileID: 5090906183284145315}
   - component: {fileID: 1765356405900065645}
   m_Layer: 0
-  m_Name: CastleDoor
+  m_Name: CastleDoor_Open
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
