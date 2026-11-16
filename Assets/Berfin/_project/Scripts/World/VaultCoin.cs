@@ -9,24 +9,34 @@ namespace Berfin
         [SerializeField] private int coinValue = 1;
         [SerializeField] private float rotateSpeed = 120f;
 
-        private void Awake()
+        [Header("Floating (Süzülme) Settings")]
+        [SerializeField] private float floatSpeed = 5f;   // Süzülme hızı
+        [SerializeField] private float floatHeight = 0.25f; // Yukarı aşağı hareket mesafesi
+
+        private Vector3 startPosition;
+
+        private void Start()
         {
-            // Coin içinden geçilebilir bir tetikleyici olmalı
+            // Coinin ilk başladığı dünya pozisyonunu merkez alıyoruz
+            startPosition = transform.position;
+
             GetComponent<Collider>().isTrigger = true;
         }
 
         private void Update()
         {
-            // Kendi ekseninde dönerek dikkat çeksin
+            // 1. Kendi ekseni etrafında dönme (Y ekseni)
             transform.Rotate(Vector3.up, rotateSpeed * Time.deltaTime, Space.World);
+
+            // 2. Sinüs dalgası ile havada yukarı aşağı süzülme efekti
+            float newY = startPosition.y + Mathf.Sin(Time.time * floatSpeed) * floatHeight;
+            transform.position = new Vector3(transform.position.x, newY, transform.position.z);
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            // Sadece Player dokunduğunda toplansın
             if (!other.CompareTag("Player")) return;
 
-            // Sunaktaki skor yöneticisine veya doğrudan DeliveryZone'a puan ekle
             DeliveryZone altar = FindFirstObjectByType<DeliveryZone>();
             if (altar != null)
             {

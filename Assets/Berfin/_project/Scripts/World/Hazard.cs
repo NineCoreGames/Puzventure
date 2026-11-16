@@ -1,35 +1,39 @@
 using UnityEngine;
-using Unity.Cinemachine; // Cinemachine kütüphanesi
 
 namespace Berfin
 {
-    [RequireComponent(typeof(Collider))]
     public class Hazard : MonoBehaviour
     {
-        private CinemachineImpulseSource impulseSource;
+        public enum HazardType { CorridorTrap, RampStep }
 
-        void Awake()
-        {
-            // Bu tuzaktaki titreşim kaynağını yakala
-            impulseSource = GetComponent<CinemachineImpulseSource>();
-        }
+        [Header("Hazard Settings")]
+        [SerializeField] private HazardType hazardType;
+        [SerializeField] private Transform corridorSpawnPoint; // Koridorun başı
+        [SerializeField] private Transform rampBottomPoint;     // Rampanın en aşağısı
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.TryGetComponent<RuneCarrier>(out var carrier))
-            {
-                if (carrier.HasRune)
-                {
-                    // Rünü düşür
-                    carrier.DropActiveRune();
+            // Sadece Player etiketine sahip nesne tetikleyebilir
+            if (!other.CompareTag("Player")) return;
 
-                    // Kamerayı 0.2 saniye kısa ve tok bir şekilde sars
-                    if (impulseSource != null)
-                    {
-                        impulseSource.GenerateImpulse();
-                    }
-                }
+            // Karakterde Character Controller varsa ışınlanırken hata vermemesi için geçici kapatıyoruz
+            CharacterController controller = other.GetComponent<CharacterController>();
+            if (controller != null) controller.enabled = false;
+
+            // Hangi tuzak türündeyse ilgili noktaya ışınla
+            if (hazardType == HazardType.CorridorTrap && corridorSpawnPoint != null)
+            {
+                other.transform.position = corridorSpawnPoint.position;
+                Debug.Log("[Rune Vault] Koridor tuzağına basıldı! Koridorun başına ışınlandın.");
             }
+            else if (hazardType == HazardType.RampStep && rampBottomPoint != null)
+            {
+                other.transform.position = rampBottomPoint.position;
+                Debug.Log("[Rune Vault] Kırmızı basamağa basıldı! Rampanın en aşağısına atıldın.");
+            }
+
+            // Pozisyon değiştiği an Character Controller'ı tekrar aktif ediyoruz
+            if (controller != null) controller.enabled = true;
         }
     }
 }

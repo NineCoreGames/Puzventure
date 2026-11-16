@@ -9,23 +9,27 @@ namespace Berfin
         [SerializeField] private float delay = 4f;
 
         private float timer;
+        private GameObject currentRune;
 
         private void Update()
         {
-            // Kaidede hala bekleyen bir rün var mı?
-            if (GetComponentInChildren<RuneItem>() != null) return;
+            // Eğer rün referansı varsa ve sahnede hala yaşıyorsa bekle
+            if (currentRune != null) return;
 
-            // Alındıysa süreyi geri say
+            // Süreyi geri say
             timer -= Time.deltaTime;
             if (timer > 0f) return;
 
             // Süre doldu: Yenisini doğur
             if (runePrefab != null)
             {
-                Instantiate(runePrefab, transform.position, transform.rotation, transform);
+                Vector3 spawnPosition = transform.position + Vector3.up * 0.8f;
+                currentRune = Instantiate(runePrefab, spawnPosition, transform.rotation);
             }
 
             timer = delay;
         }
+
+      
+        }
     }
-}
