@@ -13,14 +13,23 @@ namespace Berfin
 
         private void OnTriggerEnter(Collider other)
         {
-            // Sadece Player etiketine sahip nesne tetikleyebilir
             if (!other.CompareTag("Player")) return;
 
-            // Karakterde Character Controller varsa ışınlanırken hata vermemesi için geçici kapatıyoruz
+            // 1. Oyuncunun elinde rün taşı varsa, tuzağa değdiği yere bırak
+            if (other.TryGetComponent<RuneCarrier>(out var carrier))
+            {
+                if (carrier.HasRune)
+                {
+                    carrier.DropActiveRune();
+                    Debug.Log("[Rune Vault] Tuzağa yakalandın! Rün taşı olduğu yere düştü.");
+                }
+            }
+
+            // 2. Karakter kontrolcüsünü geçici olarak kapatıp ışınlanma sırasında çakışmayı önle
             CharacterController controller = other.GetComponent<CharacterController>();
             if (controller != null) controller.enabled = false;
 
-            // Hangi tuzak türündeyse ilgili noktaya ışınla
+            // 3. Tuzak türüne göre ilgili noktaya ışınla
             if (hazardType == HazardType.CorridorTrap && corridorSpawnPoint != null)
             {
                 other.transform.position = corridorSpawnPoint.position;
@@ -32,7 +41,7 @@ namespace Berfin
                 Debug.Log("[Rune Vault] Kırmızı basamağa basıldı! Rampanın en aşağısına atıldın.");
             }
 
-            // Pozisyon değiştiği an Character Controller'ı tekrar aktif ediyoruz
+            // 4. Karakter kontrolcüsünü tekrar aktif et
             if (controller != null) controller.enabled = true;
         }
     }
