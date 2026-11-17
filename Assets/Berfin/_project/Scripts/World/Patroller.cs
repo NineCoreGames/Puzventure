@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Patroller : MonoBehaviour
+public class Patroller : MonoBehaviour//devriye gezme
 {
     [SerializeField] private Transform pointB;
     [SerializeField] private float speed = 2.0f; // Saniyedeki hızı (metre/sn)
@@ -19,7 +19,7 @@ public class Patroller : MonoBehaviour
         // Hedef B mi yoksa A mı?
         Vector3 target = goingToB ? pointB.position : pointA;
 
-        // Hedefe doğru Time.deltaTime ile FPS'ten bağımsız şekilde ilerle
+        // Hedefe doğru Time.deltaTime ile FPS'ten bağımsız şekilde maksimum sabit hızda ilerle
         transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
 
         // Hedefe vardıysa yön değiştir
@@ -29,3 +29,5 @@ public class Patroller : MonoBehaviour
         }
     }
 }
+
+//Vector3.MoveTowards:Bir noktadan başka bir noktaya sabit hızda doğrusal hareket etmek için kullanılır. Aşırı hızlanma veya yavaşlama yapmaz.

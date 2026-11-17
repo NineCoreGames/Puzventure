@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Berfin
 {
     [RequireComponent(typeof(Rigidbody))]
-    public class RuneItem : MonoBehaviour
+    public class RuneItem : MonoBehaviour //nesne yönetim scriptimiz..!
     {
         [Header("Data Type")]
         [SerializeField] private RuneType type;
@@ -28,25 +28,25 @@ namespace Berfin
             }
         }
 
-        public bool CanBePickedUp()
+        public bool CanBePickedUp() //gecikme kontrolü, rünü hemen tekrar almasını engellmek
         {
             return Time.time > canPickUpAt;
         }
 
-        public void PickUp(Transform carryPoint)
+        public void PickUp(Transform carryPoint) //rünün alınma anı...
         {
-            rb.isKinematic = true;
-            if (boxCol != null) boxCol.enabled = false;
-            if (triggerCol != null) triggerCol.enabled = false;
+            rb.isKinematic = true; //rün alındığında fiziksel kuvvetler kapanır
+            if (boxCol != null) boxCol.enabled = false; 
+            if (triggerCol != null) triggerCol.enabled = false; //çarpışma özellikleri kapatılır
 
             transform.SetParent(carryPoint);
             transform.localPosition = Vector3.zero;
             transform.localRotation = Quaternion.identity;
         }
 
-        public void Drop()
+        public void Drop() //rünün bırakılma anı
         {
-            transform.SetParent(null);
+            transform.SetParent(null); //bırakılınca playerla olan ebeveyn bağı kopar.
             if (boxCol != null) boxCol.enabled = true;
             if (triggerCol != null) triggerCol.enabled = true;
 
@@ -58,3 +58,4 @@ namespace Berfin
         }
     }
 }
+//transform.SetParent(): Bir objeyi başka bir objenin çocuğu yapmak için kullanılır

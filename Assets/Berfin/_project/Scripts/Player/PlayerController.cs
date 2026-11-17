@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody))]
-public class PlayerController : MonoBehaviour // İsmi PlayerController yaparak profesyonelleştirdik
+public class PlayerController : MonoBehaviour 
 {
     [Header("Movement Dynamics")]
     [Tooltip("Maksimum yatay hareket hızı (m/s)")]
@@ -26,14 +26,14 @@ public class PlayerController : MonoBehaviour // İsmi PlayerController yaparak 
         moveAction = InputSystem.actions.FindAction("Move");
     }
 
-    void Update()
+    void Update()//klavye girdilerini ani kaçırmamak için burada yazarız
     {
         // Oyuncu girdilerini okuma (WASD / Analog)
         Vector2 inputVector = moveAction.ReadValue<Vector2>();
         targetMoveDirection = new Vector3(inputVector.x, 0f, inputVector.y).normalized;
     }
 
-    void FixedUpdate()
+    void FixedUpdate() //fizik hareketleri dönüş fonksiyonlarını tetikler/fizik hesaplamaları burada yapılır.
     {
         ApplyPhysicsMovement();
         ApplySteeringRotation();
@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour // İsmi PlayerController yaparak 
         // Yüzey tutuşuna göre ivme adımı
         float effectiveAcceleration = accelerationRate * surfaceFrictionMultiplier;
 
-        // EĞER BUZDAYSA (surfaceFrictionMultiplier < 0.2f):
+        // EĞER BUZDAYSA (surfaceFrictionMultiplier < 0.2f):karakterin kontrolü kaybetmesi sağlanır.
         if (surfaceFrictionMultiplier < 0.2f)
         {
             // 1. Buzda dururken veya yavaşken yukarı tırmanmayı engelle
@@ -76,13 +76,14 @@ public class PlayerController : MonoBehaviour // İsmi PlayerController yaparak 
     {
         if (targetMoveDirection.sqrMagnitude < 0.001f) return;
 
-        Quaternion targetRot = Quaternion.LookRotation(targetMoveDirection);
+        Quaternion targetRot = Quaternion.LookRotation(targetMoveDirection);//dönme hedef açısı hesaplanır burada
         float stepRot = rotationSpeed * Time.fixedDeltaTime;
         playerRb.MoveRotation(Quaternion.RotateTowards(playerRb.rotation, targetRot, stepRot));
     }
 
-    public void ModifyFriction(float newFriction)
+    public void ModifyFriction(float newFriction)//dışarıdan sürtünme değiştirme
     {
         surfaceFrictionMultiplier = Mathf.Clamp01(newFriction);
+        //karakter buzlu bir yere girdiğindesurfaceFrictionMultiplier değerimiz 0.2ye düşer
     }
 }

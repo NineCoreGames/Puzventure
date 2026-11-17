@@ -2,9 +2,9 @@ using UnityEngine;
 
 namespace Berfin
 {
-    public class Hazard : MonoBehaviour
+    public class Hazard : MonoBehaviour //tuzağa bastığında rünü düşürür başlangış noktasına atar.
     {
-        public enum HazardType { CorridorTrap, RampStep }
+        public enum HazardType { CorridorTrap, RampStep } // ikiihtimal tuzak var demek...
 
         [Header("Hazard Settings")]
         [SerializeField] private HazardType hazardType;
@@ -46,3 +46,5 @@ namespace Berfin
         }
     }
 }
+
+//ışınlanırken character controller kapatılıp açılır!

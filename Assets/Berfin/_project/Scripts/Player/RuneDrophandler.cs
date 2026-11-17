@@ -4,7 +4,8 @@ using UnityEngine.InputSystem;
 namespace Berfin
 {
     [RequireComponent(typeof(RuneCarrier))]
-    public class PlayerDrop : MonoBehaviour
+    public class PlayerDrop : MonoBehaviour //Rün taşı yere bırakma!
+        //amaç runcarrier scriptindeki DropActiveRune()fonksiyonunu tetiklemek.
     {
         private RuneCarrier carrier;
         private InputAction dropAction;

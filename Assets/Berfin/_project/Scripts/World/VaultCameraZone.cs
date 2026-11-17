@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Berfin
 {
     [RequireComponent(typeof(BoxCollider))]
-    public class VaultCameraZone : MonoBehaviour
+    public class VaultCameraZone : MonoBehaviour //oyun kamrasının açısını değiştiren...
     {
         [Header("Zone Camera Setup")]
         [Tooltip("Bu bölgeye girildiğinde devreye girecek Cinemachine kamerası")]

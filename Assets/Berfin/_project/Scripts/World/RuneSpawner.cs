@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Berfin
 {
-    public class RuneSpawner : MonoBehaviour
+    public class RuneSpawner : MonoBehaviour //rünün yerinden tekrar oluşması...
     {
         [Header("Spawn Configuration")]
         [SerializeField] private GameObject runePrefab;
@@ -14,7 +14,7 @@ namespace Berfin
         private void Update()
         {
             // Eğer rün referansı varsa ve sahnede hala yaşıyorsa bekle
-            if (currentRune != null) return;
+            if (currentRune != null) return; //üst üste yeni rünlerin doğmasını engeller.
 
             // Süreyi geri say
             timer -= Time.deltaTime;
@@ -33,3 +33,4 @@ namespace Berfin
       
         }
     }
+//Instantiate: Verilen bir Prefab şablonunu oyun sahnesinde dinamik olarak (çalışma anında) var etmeye / üretmeye yarar.

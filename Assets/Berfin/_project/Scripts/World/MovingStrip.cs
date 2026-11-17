@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Berfin
 {
-    public class MovingStrip : MonoBehaviour
+    public class MovingStrip : MonoBehaviour //tuzak şeritleri ileri geri hareket ettirir bu cs
     {
         [Header("Movement Settings")]
         [SerializeField] private float moveDistance = 3f; // Ne kadar mesafe kayacak
@@ -33,3 +33,4 @@ namespace Berfin
         }
     }
 }
+//Mathf.PingPong(): Belirli bir aralıkta (0 ile max arasında) sürekli gidip gelen (tenis masasındaki topun gidip gelmesi gibi) döngüsel bir değer üretmek için kullanılır

@@ -2,18 +2,18 @@ using UnityEngine;
 
 namespace Berfin
 {
-    public class RuneCarrier : MonoBehaviour
+    public class RuneCarrier : MonoBehaviour //rün taşıma bırakma sırasındaki süreçler runıtem ve player arasıdna köprüdür.
     {
         [Header("Carry Socket")]
         [SerializeField] private Transform carryPoint;
 
-        private RuneItem carriedRune;
+        private RuneItem carriedRune;//taşınan rün nesnesinin hafızaki yeri
         private Rigidbody rb;
-        private float baseMass;
+        private float baseMass;//ründen önceki ağırlık
 
         public bool HasRune => carriedRune != null;
 
-        private void Start()
+        private void Start() //başlangıç kütlesini kaydeder.
         {
             rb = GetComponent<Rigidbody>();
             if (rb != null)
@@ -22,9 +22,9 @@ namespace Berfin
             }
         }
 
-        private void OnTriggerEnter(Collider other)
+        private void OnTriggerEnter(Collider other) //rünü yerden alma
         {
-            if (HasRune) return;
+            if (HasRune) return;//tek sferde tek rün taşınır
 
             if (other.TryGetComponent<RuneItem>(out var rune))
             {
@@ -41,7 +41,7 @@ namespace Berfin
             }
         }
 
-        public void DropActiveRune()
+        public void DropActiveRune() //rünü yere bırakma
         {
             if (!HasRune) return;
 
@@ -52,7 +52,7 @@ namespace Berfin
             if (rb != null) rb.mass = baseMass;
         }
 
-        public RuneItem DeliverRune()
+        public RuneItem DeliverRune() //teslim etme...
         {
             if (!HasRune) return null;
 
@@ -66,3 +66,4 @@ namespace Berfin
         }
     }
 }
+//HasRune Property'si:Karakterin şu an rün taşıyıp taşımadığını dışarıdan sorgulamasını yapan sadece okunabilen...

@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Berfin
 {
     [RequireComponent(typeof(Collider))]
-    public class VaultCoin : MonoBehaviour
+    public class VaultCoin : MonoBehaviour //altınların kendi etrafında dönmesi,süzülmesi oyunucu etkileşimi skor eklemesi...
     {
         [Header("Coin Settings")]
         [SerializeField] private int coinValue = 1;
@@ -33,9 +33,9 @@ namespace Berfin
             transform.position = new Vector3(transform.position.x, newY, transform.position.z);
         }
 
-        private void OnTriggerEnter(Collider other)
+        private void OnTriggerEnter(Collider other) //coin toplanması...
         {
-            if (!other.CompareTag("Player")) return;
+            if (!other.CompareTag("Player")) return;//coine çarpan nesnenin player olması lazım
 
             DeliveryZone altar = FindFirstObjectByType<DeliveryZone>();
             if (altar != null)
@@ -44,7 +44,7 @@ namespace Berfin
             }
 
             Debug.Log($"[Rune Vault] Coin Toplandı! +{coinValue} Bonus Puan");
-            Destroy(gameObject);
+            Destroy(gameObject);//coin toplandıktan sonra hafızada sahnede yer kaplamasın diye direk siler.
         }
     }
 }

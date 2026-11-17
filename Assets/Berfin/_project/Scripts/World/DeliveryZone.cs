@@ -34,7 +34,7 @@ namespace Berfin
             Debug.Log($"[Rune Vault] Coin Toplandı! Toplam Coin Puanı: {coinScore}");
         }
 
-        private void OnTriggerEnter(Collider other)
+        private void OnTriggerEnter(Collider other) //rün teslim etme anında...
         {
             if (isLevelCompleted) return;
 
@@ -69,11 +69,11 @@ namespace Berfin
         {
             if (scoreText != null)
             {
-                scoreText.text = "Coin: " + coinScore;
+                scoreText.text = "Coin Score: " + coinScore;
             }
         }
 
-        private void ResetRuneIcons()
+        private void ResetRuneIcons()// oyun başında tüm rün ikonları sönük hale...
         {
             foreach (var icon in runeIcons)
             {
@@ -81,7 +81,7 @@ namespace Berfin
             }
         }
 
-        private void UpdateRuneIconUI()
+        private void UpdateRuneIconUI() //ilgili ikonun rengini parlatır
         {
             int index = deliveredRuneCount - 1;
             if (index >= 0 && index < runeIcons.Length && runeIcons[index] != null)
