@@ -2,11 +2,12 @@ using UnityEngine;
 
 public class E_DeliveryZone : MonoBehaviour
 {
+    // skoru artık Round tutuyor
+    [SerializeField] private E_Round round;
     [SerializeField] private GameObject gate;
     [SerializeField] private int required = 3;
 
     private int delivered;
-    private int score;
 
     void OnTriggerEnter(Collider other)
     {
@@ -16,11 +17,8 @@ public class E_DeliveryZone : MonoBehaviour
         while (carry.IsCarrying())
         {
             E_Cargo cargo = carry.HandOver();
-
-            score += cargo.Points();
+            round.AddPoints(cargo.Points());   // puanı Round'a ver
             delivered++;
-            Debug.Log("Delivered! +" + cargo.Points() + "   Score: " + score);
-
             Destroy(cargo.gameObject);
         }
 

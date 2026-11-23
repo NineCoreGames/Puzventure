@@ -3,7 +3,7 @@ using Unity.Cinemachine;
 
 public class E_Hazard : MonoBehaviour
 {
-    private CinemachineImpulseSource shake;   // null = sarsinti yok
+    private CinemachineImpulseSource shake;   
 
     void Start()
     {

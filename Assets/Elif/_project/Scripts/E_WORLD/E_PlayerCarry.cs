@@ -47,7 +47,7 @@ public class E_PlayerCarry : MonoBehaviour
         UpdateMass();
     }
 
-    // heavier cargo, heavier courier
+    
     void UpdateMass()
     {
         float extra = 0f;
