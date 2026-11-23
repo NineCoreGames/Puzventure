@@ -11,6 +11,7 @@ namespace Berfin
         [SerializeField] private int requiredRunes = 3;
 
         [Header("UI Settings")]
+        [SerializeField] private Round round;//yeniweek7
         [SerializeField] private TextMeshProUGUI scoreText;
         [SerializeField] private Image[] runeIcons; // 3 adet rün ikonunu buraya sürükleyeceğiz
         [SerializeField] private Color collectedColor = Color.yellow; // Teslim edilince olacak renk
@@ -46,6 +47,7 @@ namespace Berfin
                     if (deliveredRune != null)
                     {
                         deliveredRuneCount++;
+                        round?.AddPoints(1); // veya rünün puan değeri neyse onu ver
 
                         // İlgili rün ikonunu sarıya boya
                         UpdateRuneIconUI();
