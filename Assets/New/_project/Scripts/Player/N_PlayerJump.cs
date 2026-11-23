@@ -1,12 +1,13 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerJump : MonoBehaviour
+public class N_PlayerJump : MonoBehaviour
 {
     [SerializeField] private float jumpForce = 7f;
 
     private Rigidbody rb;
     private InputAction jumpAction;
+    private bool isGrounded;
 
     private void Awake()
     {
@@ -26,17 +27,43 @@ public class PlayerJump : MonoBehaviour
 
     private void Update()
     {
-        if (jumpAction.WasPressedThisFrame())
+        if (jumpAction.WasPressedThisFrame() && isGrounded)
         {
-            Debug.Log("SPACE BASILDI!");
+            isGrounded = false;
 
             rb.AddForce(
                 Vector3.up * jumpForce,
                 ForceMode.Impulse
             );
-
-            Debug.Log("ZIPLAMA KUVVETI UYGULANDI!");
         }
+    }
+
+    private void FixedUpdate()
+    {
+        if (rb.linearVelocity.y < 0)
+        {
+            rb.AddForce(
+                Physics.gravity * 2f,
+                ForceMode.Acceleration
+            );
+        }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        foreach (ContactPoint contact in collision.contacts)
+        {
+            if (contact.normal.y > 0.5f)
+            {
+                isGrounded = true;
+                return;
+            }
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        isGrounded = false;
     }
 
     private void OnDisable()

@@ -1,21 +1,39 @@
 using UnityEngine;
+
 public class N_CargoSpawner : MonoBehaviour
 {
-    // what to copy, and how long the pad stays empty
     [SerializeField] private GameObject cargoPrefab;
     [SerializeField] private float delay = 4f;
-    private float timer; // seconds left until the next cargo
+
+    private float timer;
+    private N_Cargo spawnedCargo;
+
     void Update()
     {
-        // a cargo still waits on this pad? then do nothing
-        if (GetComponentInChildren<N_Cargo>() != null) return;
-        // count down: a little less time left every frame
-        timer -= Time.deltaTime;
-        if (timer > 0f) return;
-        // time is up: a copy of the prefab, here, as our child
-        Instantiate(cargoPrefab, transform.position,
-        transform.rotation, transform);
+        if (spawnedCargo != null)
+        {
+            // Kargo hala pad üzerinde mi?
+            if (spawnedCargo.transform.IsChildOf(transform))
+                return;
 
-        timer = delay; // the next wait will be this long
+            // Kargo oyuncu tarafından taşınıyor mu?
+            if (spawnedCargo.GetComponentInParent<N_PlayerCarry>() != null)
+                return;
+        }
+
+        timer -= Time.deltaTime;
+
+        if (timer > 0f) return;
+
+        GameObject newCargo = Instantiate(
+            cargoPrefab,
+            transform.position,
+            transform.rotation,
+            transform
+        );
+
+        spawnedCargo = newCargo.GetComponent<N_Cargo>();
+
+        timer = delay;
     }
 }

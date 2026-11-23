@@ -1,23 +1,23 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Puzventure.Gokturk;
 
 namespace Puzventure.Nur
 {
     public class PlayerDrop : MonoBehaviour
     {
-        private PlayerCarry carry;
+        private N_PlayerCarry carry;
         private InputAction dropAction;
 
         void Start()
         {
-            carry = GetComponent<PlayerCarry>();
+            carry = GetComponent<N_PlayerCarry>();
             dropAction = InputSystem.actions.FindAction("Interact");
         }
 
         void Update()
         {
-            if (dropAction.WasPressedThisFrame()) carry.DropCargo();
+            if (dropAction.WasPressedThisFrame())
+                carry.DropCargo();
         }
     }
 }
