@@ -7,6 +7,7 @@ namespace Sevval
     {
         public int MaxHealth = 100;
         public int CurrentHealth = 100;
+        [SerializeField] private GameOver gameOver;
 
         // Oyuncu hasar aldığında
         public void TakeDamage(int damage)
@@ -39,6 +40,8 @@ namespace Sevval
         private void Die()
         {
             Debug.Log("Oyuncu öldü!");
+
+            gameOver.Show();
         }
     }
 }
