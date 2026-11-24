@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class H_DeliveryZone : MonoBehaviour
 {
-    private int score = 0; // Toplam puaný tutacaðýmýz deðiþken[cite: 232, 233]
+    // Artýk skoru Round objesi tutuyor, onu buraya baðlayacaðýz[cite: 282, 283]
+    [SerializeField] private H_Round round;
 
     void OnTriggerEnter(Collider other)
     {
@@ -14,11 +15,11 @@ public class H_DeliveryZone : MonoBehaviour
 
         foreach (H_Cargo cargo in deliveredCargos)
         {
-            score += cargo.Points(); // Teslim edilen kargonun puanýný toplam skora ekle[cite: 232, 233]
+            // YENÝ: Kargonun puanýný Round scriptine gönderiyoruz[cite: 282, 283]
+            round.AddPoints(cargo.Points());
             Destroy(cargo.gameObject);
         }
 
-        // Konsola kaç kargo verdiðimizi ve güncel toplam skorumuzu yazdýralým[cite: 232, 233]
-        Debug.Log(deliveredCargos.Length + " kargo teslim edildi! GUNCEL SKOR: " + score);
+        // Debug.Log satýrýný sildik, artýk puanlarý konsolda deðil ekranda göreceðiz![cite: 282, 283]
     }
 }
