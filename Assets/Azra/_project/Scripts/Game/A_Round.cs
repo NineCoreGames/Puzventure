@@ -3,38 +3,38 @@ using TMPro;
 
 public class A_Round : MonoBehaviour
 {
-    // turun suresi ve iki HUD yazisi
     [SerializeField] private float roundLength = 150f;
     [SerializeField] private TMP_Text scoreText;
     [SerializeField] private TMP_Text timeText;
-
-    // YENI (benim levelim): kapi kurali artik Round'da
     [SerializeField] private int scoreToOpen = 7;
     [SerializeField] private GameObject gate;
+    [SerializeField] private A_GameOver gameOver;   // YENI: bitis ekrani
 
-    private int score;        // bu turdaki puan
-    private float timeLeft;   // bitise kalan saniye
-    private bool gateOpen;    // kapi acildi mi?
+    private int score;
+    private float timeLeft;
+    private bool gateOpen;
+    private bool over;        // YENI: tur bittiyse true
 
     void Start()
     {
-        timeLeft = roundLength;   // saat dolu baslar
+        timeLeft = roundLength;
     }
 
     void Update()
     {
-        // geri say, ama sifirin altina inme
+        if (over) return;     // YENI: bittiyse artik hicbir sey degismez
+
         timeLeft -= Time.deltaTime;
         if (timeLeft < 0f) timeLeft = 0f;
         ShowHud();
+        if (timeLeft <= 0f) EndRound("Time's up!");   // YENI: saat bitti
     }
 
-    // teslim alani bunu cagirir
     public void AddPoints(int points)
     {
+        if (over) return;     // YENI: bitisten sonra puan yok
         score += points;
 
-        // 7'ye ulasti mi? kapi bir kere acilir
         if (!gateOpen && score >= scoreToOpen)
         {
             gateOpen = true;
@@ -43,13 +43,20 @@ public class A_Round : MonoBehaviour
         }
     }
 
-    // baska script'ler sorabilir: kapi acik mi?
     public bool GateOpen()
     {
         return gateOpen;
     }
 
-    // iki sayiyi ekrana yaz
+    // YENI: sure bitti - ya da baska bir script turu bitiriyor (Adim 5: kapidan cikis)
+    public void EndRound(string message)
+    {
+        if (over) return;          // iki kere bitirme
+        over = true;
+        Time.timeScale = 0f;       // dunyayi durdur
+        gameOver.Show(message, score);
+    }
+
     void ShowHud()
     {
         if (gateOpen) scoreText.text = "Score " + score + " - Gate open!";
