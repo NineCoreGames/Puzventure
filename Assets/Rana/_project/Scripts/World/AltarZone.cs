@@ -4,22 +4,23 @@ namespace Puzventure.Rana
 {
     public class AltarZone : MonoBehaviour
     {
-        private int score; // Þimdiye kadar toplanan toplam puan
+        // Skoru artýk Round objesi tutuyor
+        [SerializeField] private Round round;
 
         void OnTriggerEnter(Collider other)
         {
             ExplorerCarry carry = other.GetComponent<ExplorerCarry>();
             if (carry == null) return;
-
-            // Oyuncu elinde bir rün taþýmýyorsa iþlem yapma
             if (!carry.IsCarrying()) return;
 
-            // Rünü teslim al, puanýný ekle ve objeyi yok et
+            // Rünü teslim al, puanýný Round'a ekle ve objeyi yok et
             RuneStone rune = carry.HandOver();
             if (rune != null)
             {
-                score += rune.Points();
-                Debug.Log("Delivered! +" + rune.Points() + " | Total Score: " + score);
+                if (round != null)
+                {
+                    round.AddPoints(rune.Points());
+                }
                 Destroy(rune.gameObject);
             }
         }

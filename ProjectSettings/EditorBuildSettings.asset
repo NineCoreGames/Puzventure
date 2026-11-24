@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Gokturk/_Project/Scenes/main.unity
     guid: 5f5a52f6deb2d87428200a4208799d93
+  - enabled: 1
+    path: Assets/Rana/_project/Scenes/Level_Rana.unity
+    guid: 477a4d74ab6a745458e0e73bc8587b46
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: d91f4456b915e47dd8bbd28e7990bc5b, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
